@@ -45,6 +45,33 @@ suite('enums', () => {
       assert.that(enums['operations-supported']['Startup-All-Printers']).is.equalTo(0x64);
       done();
     });
+    test('Cups-Get-Default is undefined', (done) => {
+      assert.that(enums['operations-supported']['Cups-Get-Default']).is.undefined();
+      done();
+    });
+    test('lookup returns undefined for operation greater 0x64', (done) => {
+      assert.that(enums['operations-supported'].lookup[0x4001]).is.undefined();
+      done();
+    });
+  });
+
+  suite('cups-operations-supported', () => {
+    test('is an object', (done) => {
+      assert.that(enums['cups-operations-supported']).is.ofType('object');
+      done();
+    });
+    test('Cups-Get-Default is 0x4001', (done) => {
+      assert.that(enums['cups-operations-supported']['Cups-Get-Default']).is.equalTo(0x4001);
+      done();
+    });
+    test('Cups-Get-Printers is 0x4002', (done) => {
+      assert.that(enums['cups-operations-supported']['Cups-Get-Printers']).is.equalTo(0x4002);
+      done();
+    });
+    test('Cups-Move-Job is 0x400d', (done) => {
+      assert.that(enums['cups-operations-supported']['Cups-Move-Job']).is.equalTo(0x400d);
+      done();
+    });
   });
 
   suite('job-collation-type', () => {
