@@ -1,6 +1,6 @@
 {
 	"name": "ipp",
-	"version": "2.0.0",
+	"version": "2.0.7",
 	"description": "Internet Printing Protocol (IPP) for nodejs",
 	"keywords": [
 		"ipp",
