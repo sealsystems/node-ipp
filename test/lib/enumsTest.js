@@ -72,6 +72,10 @@ suite('enums', () => {
       assert.that(enums['cups-operations-supported']['CUPS-Move-Job']).is.equalTo(0x400d);
       done();
     });
+    test('CUPS-Create-Local-Printer is 0x4028', (done) => {
+      assert.that(enums['cups-operations-supported']['CUPS-Create-Local-Printer']).is.equalTo(0x4028);
+      done();
+    });
   });
 
   suite('job-collation-type', () => {
