@@ -17,7 +17,6 @@ environment:
 
 install:
   - ps: Install-Product node $env:NODE_VERSION x64
-  - npm install -g roboter-cli
   - npm install
 
 build: off
