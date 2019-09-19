@@ -1,7 +1,6 @@
+See also https://jira.sealsystems.de/jira/browse/
 
-
-
-The following sections can be used to provide more information for the changelog:
+Use the following sections to provide more information for changelog and/or release notes:
 
 #### Details
 
@@ -12,4 +11,3 @@ The following sections can be used to provide more information for the changelog
 
 
 #### References
-
