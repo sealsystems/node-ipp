@@ -23,16 +23,15 @@ jobs:
     steps:
       - checkout
       - restore_cache: &restore-cache
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}-{{ checksum ".circleci/config.yml" }}
       - run: &install-dependencies
           name: Install dependencies
           command: |
             if [ ! -d ./node_modules ]; then
               npm install
-              npm install --no-save @sealsystems/semantic-release-config roboter-cli semantic-release
             fi
       - save_cache: &save-cache
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}-{{ checksum ".circleci/config.yml" }}
           paths:
             - ./node_modules
       - run:
@@ -40,7 +39,7 @@ jobs:
           command: npm run bot
       - run:
           name: Run code coverage
-          command: npm run coverage
+          command: npm run test:coverage
       - store_artifacts:
           path: coverage/lcov-report
           destination: coverage
