@@ -37,11 +37,11 @@
     "@sealsystems/eslint-config-es": "3.5.3",
     "@sealsystems/mocha": "4.1.1",
     "@sealsystems/semantic-release": "4.0.12",
-    "concat-stream": "1.6.2",
-    "express": "4.16.3",
+    "concat-stream": "2.0.0",
+    "express": "4.17.1",
     "freeport": "1.0.5",
-    "pdfkit": "0.8.3",
-    "raw-body": "2.3.3"
+    "pdfkit": "0.10.0",
+    "raw-body": "2.4.1"
   },
   "main": "ipp.js",
   "licenses": [

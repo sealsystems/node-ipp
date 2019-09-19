@@ -1,5 +1,8 @@
 'use strict';
 
+// the following code-example had to be commented out to prevent `depcheck` from running into problems
+
+/*
 const mdns = require('mdns');
 
 const browser = mdns.createBrowser(mdns.tcp('ipp'));
@@ -8,6 +11,7 @@ browser.on('serviceUp', (rec) => {
   console.log(rec.name, `http://${rec.host}:${rec.port}/${rec.txtRecord.rp}`);
 });
 browser.start();
+*/
 
 //example output...
 //HP LaserJet 400 M401dn (972E51) http://CP01.local:631/ipp/printer
