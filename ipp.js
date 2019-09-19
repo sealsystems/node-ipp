@@ -1,19 +1,30 @@
 'use strict';
 
-const util = require('./lib/ipputil');
+const util = require('./lib/ipputil'),
+  parse = require('./lib/parser.js'),
+  serialize = require('./lib/serializer.js'),
+  request = require('./lib/request.js'),
+  Printer = require('./lib/printer.js'),
+  versions = require('./lib/versions.js'),
+  attributes = require('./lib/attributes.js'),
+  keywords = require('./lib/keywords.js'),
+  enums = require('./lib/enums.js'),
+  tags = require('./lib/tags.js'),
+  statusCodes = require('./lib/statusCodes.js'),
+  StreamParser = require('./lib/StreamParser.js');
 
 module.exports = {
-  parse: require('./lib/parser'),
-  serialize: require('./lib/serializer'),
-  request: require('./lib/request'),
-  Printer: require('./lib/printer'),
-  versions: require('./lib/versions'),
-  attributes: require('./lib/attributes'),
-  keywords: require('./lib/keywords'),
-  enums: require('./lib/enums'),
-  tags: require('./lib/tags'),
-  statusCodes: require('./lib/statusCodes'),
-  StreamParser: require('./lib/StreamParser')
+  parse,
+  serialize,
+  request,
+  Printer,
+  versions,
+  attributes,
+  keywords,
+  enums,
+  tags,
+  statusCodes,
+  StreamParser
 };
 module.exports.operations = module.exports.enums['operations-supported'];
 module.exports.attribute = {

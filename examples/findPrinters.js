@@ -1,9 +1,11 @@
+'use strict';
 
-var mdns = require('mdns'),
-	browser  = mdns.createBrowser(mdns.tcp('ipp'));
+const mdns = require('mdns');
 
-browser.on('serviceUp', function (rec) {
-	console.log(rec.name, 'http://'+rec.host+':'+rec.port+'/'+rec.txtRecord.rp);
+const browser = mdns.createBrowser(mdns.tcp('ipp'));
+
+browser.on('serviceUp', (rec) => {
+  console.log(rec.name, `http://${rec.host}:${rec.port}/${rec.txtRecord.rp}`);
 });
 browser.start();
 

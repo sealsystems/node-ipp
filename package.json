@@ -9,10 +9,13 @@
   ],
   "scripts": {
     "bot": "bot",
-    "release": "semantic-release --branch ${CIRCLE_BRANCH}",
-    "test": "npm run bot test-units",
-    "coverage": "nyc --reporter=text --reporter=lcov mocha",
-    "report": "npm run coverage && if [[ $OSTYPE == darwin* ]]; then open=open; else open=xdg-open; fi && $open coverage/lcov-report/index.html"
+    "lint": "lint",
+    "lint:fix": "lint-fix",
+    "release": "release",
+    "test": "test-run",
+    "test:coverage": "test-coverage",
+    "test:coverage:check": "test-coverage-check",
+    "test:report": "test-report"
   },
   "homepage": "http://github.com/sealsystems/node-ipp",
   "repository": {
@@ -31,17 +34,14 @@
     }
   ],
   "devDependencies": {
-    "@sealsystems/eslint-config-es": "1.1.1",
-    "assertthat": "1.0.0",
+    "@sealsystems/eslint-config-es": "3.5.3",
+    "@sealsystems/mocha": "4.1.1",
+    "@sealsystems/semantic-release": "4.0.12",
     "concat-stream": "1.6.2",
     "express": "4.16.3",
     "freeport": "1.0.5",
-    "nyc": "12.0.2",
     "pdfkit": "0.8.3",
-    "raw-body": "2.3.3",
-    "roboter": "0.16.0",
-    "roboter-cli": "^0.3.1",
-    "roboter-server": "0.16.0"
+    "raw-body": "2.3.3"
   },
   "main": "ipp.js",
   "licenses": [
