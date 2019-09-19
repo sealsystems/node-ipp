@@ -11,7 +11,7 @@ const rawBody = require('raw-body');
 const request = require('../../lib/request');
 const serializer = require('../../lib/serializer');
 
-const assertBufferEqual = function (buf1, buf2) {
+const assertBufferEqual = function(buf1, buf2) {
   assert.that(buf1.length).is.equalTo(buf2.length);
   for (let i = 0; i < buf1.length; i++) {
     assert.that(buf1[i]).is.equalTo(buf2[i]);
