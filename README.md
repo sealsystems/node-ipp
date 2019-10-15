@@ -159,4 +159,3 @@ ipp.request(opts, data, function(err, res) {
 ## License
 
 MIT
-
