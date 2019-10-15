@@ -1,3 +1,14 @@
+## 2.4.3 (2019-10-15)
+
+### Chores
+
+
+#### trigger release ([bac186d](https://github.com/sealsystems/node-ipp/commit/bac186d))
+
+
+
+---
+
 ## 2.4.2 (2019-10-15)
 
 ### Bug Fixes
