@@ -9,10 +9,14 @@
   ],
   "scripts": {
     "bot": "bot",
-    "release": "semantic-release --branch ${CIRCLE_BRANCH}",
-    "test": "npm run bot test-units",
-    "coverage": "nyc --reporter=text --reporter=lcov mocha",
-    "report": "npm run coverage && if [[ $OSTYPE == darwin* ]]; then open=open; else open=xdg-open; fi && $open coverage/lcov-report/index.html"
+    "release": "release",
+    "test": "test-run",
+    "licenses": "license-checker --production --csv",
+    "lint": "lint",
+    "lint:fix": "lint-fix",
+    "test:coverage": "test-coverage",
+    "test:coverage:check": "test-coverage-check",
+    "test:report": "test-report"
   },
   "homepage": "http://github.com/sealsystems/node-ipp",
   "repository": {
@@ -31,17 +35,14 @@
     }
   ],
   "devDependencies": {
-    "@sealsystems/eslint-config-es": "1.1.1",
-    "assertthat": "1.0.0",
+    "@sealsystems/eslint-config-es": "3.6.0",
+    "@sealsystems/mocha": "4.1.1",
+    "@sealsystems/semantic-release": "4.0.13",
     "concat-stream": "2.0.0",
     "express": "4.17.1",
     "freeport": "1.0.5",
-    "nyc": "14.1.1",
     "pdfkit": "0.10.0",
-    "raw-body": "2.4.1",
-    "roboter": "0.16.0",
-    "roboter-cli": "^0.3.1",
-    "roboter-server": "0.16.0"
+    "raw-body": "2.4.1"
   },
   "main": "ipp.js",
   "licenses": [
@@ -49,5 +50,13 @@
       "type": "MIT",
       "url": "http://www.opensource.org/licenses/MIT"
     }
-  ]
+  ],
+  "license": "MIT",
+  "release": {
+    "extends": "@sealsystems/semantic-release/node-module"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {}
 }
