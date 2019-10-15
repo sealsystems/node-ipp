@@ -16,15 +16,17 @@ suite('parser', () => {
     const data = Buffer.from(
       '0200' + // version 2.0
       '000B' + // Get-Printer-Attributes
-      '00000001', // reqid
+        '00000001', // reqid
       'hex'
     );
     /* eslint-enable line-comment-position */
     /* eslint-enable no-inline-comments */
 
-    assert.that(() => {
-      parser(data);
-    }).is.throwing('NotEnoughData');
+    assert
+      .that(() => {
+        parser(data);
+      })
+      .is.throwing('NotEnoughData');
     done();
   });
 
@@ -35,15 +37,17 @@ suite('parser', () => {
       '0200' + // version 2.0
       '000B' + // Get-Printer-Attributes
       '00000001' + // reqid
-      '01', // operation-attributes-tag
+        '01', // operation-attributes-tag
       'hex'
     );
     /* eslint-enable line-comment-position */
     /* eslint-enable no-inline-comments */
 
-    assert.that(() => {
-      parser(data);
-    }).is.throwing('NotEnoughData');
+    assert
+      .that(() => {
+        parser(data);
+      })
+      .is.throwing('NotEnoughData');
     done();
   });
 
@@ -54,7 +58,7 @@ suite('parser', () => {
       '0200' + // version 2.0
       '000B' + // Get-Printer-Attributes
       '00000001' + // reqid
-      '01', // operation-attributes-tag
+        '01', // operation-attributes-tag
       'hex'
     );
     const attributes = Buffer.from(
@@ -66,11 +70,13 @@ suite('parser', () => {
 
     /* eslint-disable no-loop-func */
     for (let l = 1; l <= attributes.length; l++) {
-      assert.that(() => {
-        const data = Buffer.concat([baseData, attributes.slice(0, l)]);
+      assert
+        .that(() => {
+          const data = Buffer.concat([baseData, attributes.slice(0, l)]);
 
-        parser(data);
-      }).is.throwing('NotEnoughData');
+          parser(data);
+        })
+        .is.throwing('NotEnoughData');
     }
     /* eslint-enable no-loop-func */
     done();
