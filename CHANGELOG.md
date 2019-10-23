@@ -1,3 +1,16 @@
+## 2.4.4 (2019-10-23)
+
+### Bug Fixes
+
+
+#### Notify missings ([0760185](https://github.com/sealsystems/node-ipp/commit/0760185))
+
+Add attributes for event notifications.
+Write group 'event-notification-attributes-tag'
+
+
+---
+
 ## 2.4.3 (2019-10-15)
 
 ### Chores
