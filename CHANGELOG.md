@@ -1,3 +1,16 @@
+## 2.5.0 (2019-10-29)
+
+### Features
+
+
+#### Included SEAL Systems specific operation attributes ([cdb206c](https://github.com/sealsystems/node-ipp/commit/cdb206c))
+
+#### Included SEAL Systems specific operation attributes ([fbb6841](https://github.com/sealsystems/node-ipp/commit/fbb6841))
+
+
+
+---
+
 ## 2.4.4 (2019-10-23)
 
 ### Bug Fixes
