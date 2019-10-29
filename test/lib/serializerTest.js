@@ -5,6 +5,7 @@ const PassThrough = require('stream').PassThrough;
 const assert = require('assertthat');
 
 const serializer = require('../../lib/serializer');
+const parser = require('../../lib/parser');
 
 const assertBufferEqual = function(buf1, buf2) {
   assert.that(buf1.length).is.equalTo(buf2.length);
@@ -107,5 +108,16 @@ suite('serializer', () => {
       .is.throwing('Data must be a Buffer or a stream.Readable.');
 
     done();
+  });
+
+  test('adds seal specific attributes', async () => {
+    msg['operation-attributes-tag']['seal-attributes'] = ['a=b', 'a2=b2'];
+    msg['operation-attributes-tag']['seal-attributes-v2'] = ['a3=b3'];
+    const data = serializer(msg);
+
+    const parsed = parser(data);
+
+    assert.that(parsed['operation-attributes-tag']['seal-attributes']).is.equalTo(['a=b', 'a2=b2']);
+    assert.that(parsed['operation-attributes-tag']['seal-attributes-v2']).is.equalTo('a3=b3');
   });
 });
