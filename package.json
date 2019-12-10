@@ -41,7 +41,7 @@
     "concat-stream": "2.0.0",
     "express": "4.17.1",
     "freeport": "1.0.5",
-    "pdfkit": "0.10.0",
+    "pdfkit": "0.11.0",
     "raw-body": "2.4.1"
   },
   "main": "ipp.js",
