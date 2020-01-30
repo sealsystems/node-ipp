@@ -36,7 +36,7 @@
   ],
   "devDependencies": {
     "@sealsystems/eslint-config-es": "3.6.0",
-    "@sealsystems/mocha": "4.1.2",
+    "@sealsystems/mocha": "4.1.3",
     "@sealsystems/semantic-release": "4.0.18",
     "concat-stream": "2.0.0",
     "express": "4.17.1",
