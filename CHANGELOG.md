@@ -1,3 +1,14 @@
+## 2.6.0 (2020-04-07)
+
+### Features
+
+
+#### Enabled streaming of ipp response ([5625be8](https://github.com/sealsystems/node-ipp/commit/5625be8))
+
+
+
+---
+
 ## 2.5.0 (2019-10-29)
 
 ### Features
