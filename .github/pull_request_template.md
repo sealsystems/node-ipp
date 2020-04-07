@@ -1,30 +1,19 @@
-### Details
+See also https://jira.sealsystems.de/jira/browse/
 
-
-
-### Breaking Changes
-
-
-
-### References
-
-
-
-### Introduction to Pull Requests
-
-<details>
-<summary>
-Please read before submitting your first pull request!
-</summary>
+<details><summary>Click here for a detailed introduction. Please read before submitting your first pull request!</summary>
 <p>
+
+#### Introduction to Pull Requests
 
 Thank you for creating a pull request. We really appreciate your effort!
 
 Here is some information to help you integrate your changes as easily as possible into the next release.
 
-#### Title Field
+##### Title Field
 
-The title is one of the most important parts of a pull request. The content is shown in `CHANGELOG.md` and release notes. Therefore, be sure to summarize your changes in a short but catchy sentence. Others should be able to easily get an idea of your changes.
+The title is one of the most important aspects of a pull request. The content is shown in `CHANGELOG.md` and release notes. Therefore, be sure to summarize your changes in a short but catchy sentence. Others should be able to easily get an idea of your changes.
+
+###### Keywords
 
 By adding keywords at the beginning of the title, you can control the process of merging and releasing your pull request. Here is the list of all available keywords:
 
@@ -48,37 +37,33 @@ By adding keywords at the beginning of the title, you can control the process of
 
   A pull request with this prefix in its title is marked as a maintenance change. In general this creates a patch release when merging the pull request into the master branch. A label with the expected release type is added to the pull request. Only `CHANGELOG.md`, but not our release notes, will be updated with information about the pull request.
 
-You can specify the kind of pull request when you create a new one. But do not forget to prefix it with `WIP:`. Here is an example title for such a pull request:
+You can specify the kind of pull request when you create a new one. But do not forget to prefix it with `WIP`. Here is an example title for such a pull request:
 
 ```
 WIP: feat: My super cool new feature
 ```
 
-After finishing the work, you can simply remove `WIP:`.
+After finishing the work, you can simply remove `WIP:`.
 
-Please do not format the `Title` field with Markdown.
+##### Description Field
 
-#### Description Field
+Besides this introduction, the description field also contains the following sections that contribute to `CHANGELOG.md` and release notes:
 
-Besides this introduction, the description field also contains sections with the following headings which contribute to `CHANGELOG.md` and release notes:
+- `Details`
 
-- `Details`
-
-  Sometimes it is not possible to explain a change with a single short line in the `Title` field. In this case, you can add a more detailed description in the `Details` section.
+  Sometimes it is not possible to explain a change with a single short line in the `Title`. In this case, you can add a more detailed description in the `Details` section below.
 
   You may add several paragraphs if needed and unlike the `Title` field, you can format the content with Markdown.
 
 - `Breaking Changes`
 
-  Please fill out this section if **and only if** your changes affect the public Interface. This creates a major release when merging the pull request into the master branch. Breaking changes are shown in an additional section of `CHANGELOG.md` and release notes. So two headings will be created: One for the bugfix/feature itself and one for the breaking changes.
+  Please fill out this section if **and only if** your changes affect the public Interface. This creates a major release when merging the pull request into the master branch. Breaking changes are shown in an additional section of `CHANGELOG.md` or release notes. So two headings will be created: One for the bugfix/feature itself and one for the breaking changes.
 
   All information for the `Details` section also applies here, with one important exception:
 
-  In contrast to the `Details` section, the first line is used as a title for the breaking change. Therefore, please add a short description first and append paragraphs for more information if needed. Do not start with a large paragraph and do not format the first line.
+  In contrast to the `Details` section, the first line is used as a title for the breaking change. Therefore, please add a short description first and add paragraphs for more information if needed. Do not start with a large paragraph! Here is an example of a longer text for a breaking change:
 
-  Here is an example of a longer text for a breaking change:
-
-  > This is a brief description of the breaking change (without a punctuation mark and formatting)
+  >  This is a brief description of the breaking change (**without** a punctuation mark)
   >
   > In another paragraph, I add detailed information of steps needed to adapt to the new interface. I can also *format* this paragraph using Markdown.
   >
@@ -86,7 +71,7 @@ Besides this introduction, the description field also contains sections with the
 
   The first line is shown as a heading and the following paragraphs as normal text.
 
-  Use this section only to describe changes to the interface and how to adapt to the new version. Use the `Details` section to provide information about the bugfix/feature itself.
+  Use this section only to describe the changes to the interface and how to adapt to the new version. Use the `Details` section to provide information about the bugfix/feature itself.  
 
 - `References`
 
@@ -96,7 +81,7 @@ Besides this introduction, the description field also contains sections with the
 
 Please make sure that you leave a blank line between the headings and the beginning and end of your text.
 
-#### Merging into Master
+###### Merging into Master
 
 After all reviews have been successfully completed, you are ready to merge your pull request into the master branch. This is only possible if all required automated tests pass.
 
@@ -106,9 +91,18 @@ You cannot use the green "Merge" button. Instead you must add a special comment 
 /merge
 ```
 
-This causes our `merge bot` to merge the pull request using a commit message consisting of the various pieces of information in the `Title` and `Description` fields.
+This causes our `merge bot` to merge the pull request using a commit message consisting of the various pieces of information in the `Title`  and `Description` fields.
 
-Only users with admin or write permissions are allowed to merge a pull request. The branch is automatically deleted after a successful merge.
-
+The branch is automatically deleted after a successful merge.
 </p>
 </details>
+
+#### Details
+
+
+
+#### Breaking Changes
+
+
+
+#### References

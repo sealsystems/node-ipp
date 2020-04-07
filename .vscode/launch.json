@@ -15,13 +15,16 @@
           "--timeout",
           "999999",
           "--colors",
-          "--recursive",
-          "${workspaceFolder}/test"
+          "${workspaceFolder}/test",
+          "--recursive"
         ],
-        "internalConsoleOptions": "openOnSessionStart",
-        "skipFiles": [
-          "<node_internals>/**"
-        ]
-      }
+        "internalConsoleOptions": "openOnSessionStart"
+      },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/ipp.js"
+        }
     ]
 }

@@ -1,6 +1,2 @@
 *
-!/bin/**
 !/lib/**
-
-# Yeoman generators
-!/generators/**
