@@ -16,7 +16,7 @@ x-environment: &environment
 jobs:
   test:
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:12.13.1
       - image: circleci/mongo:3
       - image: consul:0.7.5
 

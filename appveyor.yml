@@ -15,7 +15,7 @@ version: "{build}"
 image: Visual Studio 2017
 
 environment:
-  NODE_VERSION: 8.9.4
+  NODE_VERSION: 12.13.1
   CONSUL_VERSION: 0.7.5
   TLS_UNPROTECTED: world
 
