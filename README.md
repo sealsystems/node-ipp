@@ -31,16 +31,16 @@ $ npm install @sealsystems/ipp
 ## Printer(url [,options])
 
 ```javascript
-var ipp = require('@sealsystems/ipp');
-var PDFDocument = require('pdfkit');
+const ipp = require('@sealsystems/ipp');
+const PDFDocument = require('pdfkit');
 
 //make a PDF document
-var doc = new PDFDocument({ margin: 0 });
+const doc = new PDFDocument({ margin: 0 });
 doc.text('.', 0, 780);
 
 doc.output(function(pdf) {
-  var printer = ipp.Printer('http://NPI977E4E.local.:631/ipp/printer');
-  var msg = {
+  const printer = ipp.Printer('http://NPI977E4E.local.:631/ipp/printer');
+  const msg = {
     'operation-attributes-tag': {
       'requesting-user-name': 'William',
       'job-name': 'My Test Job',
@@ -72,16 +72,18 @@ To interact with a printer, create a `Printer` object.
 Executes an IPP operation on the Printer object.
 
 * 'operation' - There are many operations defined by IPP. See: [/lib/enums.js](https://github.com/williamkapke/ipp/blob/master/lib/enums.js#L52).
-* 'message - A javascript object to be serealized into an IPP binary message.
-* 'callback(err, response)' - A function to callback with the Printer's response.
+* 'message - A javascript object to be serialized into an IPP binary message.
+  * Add binary data like file content as `data` property. `data` may either a buffer or a readable stream.
+  * If response should be streamed instead of buffered and parsed (e.g. for response size reason) add a writeable stream as `output` property to message.
+* 'callback(err, response)' - A function to callback with the Printer's response. Response is always `null` in case of an output stream.
 
 ## ipp.parse(buffer)
 
 Parses a binary IPP message into a javascript object tree.
 
 ```javascript
-var ipp = require('@sealsystems/ipp');
-var data = new Buffer(
+const ipp = require('@sealsystems/ipp');
+const data = new Buffer(
   '0200' + //version 2.0
   '000B' + //Get-Printer-Attributes
   '00000001' + //reqid
@@ -92,7 +94,7 @@ var data = new Buffer(
   'hex'
 );
 
-var result = ipp.parse(data);
+const result = ipp.parse(data);
 console.log(JSON.stringify(result, null, 2));
 //  ta-da!
 //{
@@ -114,14 +116,18 @@ See [request](#request) for example.
 
 <a id="request"></a>
 
-## ipp.request(url, data, callback)
+## ipp.request(url, data, [writeableStream,] callback)
 
 Makes an IPP request to a url.
 
+If binary output should be streamed instead of read into a buffer object, call `request` with the optional `writeableStream` argument.
+
+**Example 1: returning a response object**
+
 ```javascript
-var ipp = require('@sealsystems/ipp');
-var uri = 'your_printer';
-var data = ipp.serialize({
+const ipp = require('@sealsystems/ipp');
+const uri = 'your_printer';
+const data = ipp.serialize({
   operation: 'Get-Printer-Attributes',
   'operation-attributes-tag': {
     'attributes-charset': 'utf-8',
@@ -137,6 +143,31 @@ ipp.request(uri, data, function(err, res) {
   console.log(JSON.stringify(res, null, 2));
 });
 //  ta-da!.. hopefully you'll see a ton of stuff from your printer
+```
+
+**Example 2: writing into stream**
+
+```javascript
+const ipp = require('@sealsystems/ipp');
+const uri = 'your_printer';
+const jobId = 'your job id'
+const data = ipp.serialize({
+  operation: 'Fetch-Document',
+  'operation-attributes-tag': {
+    'attributes-charset': 'utf-8',
+    'attributes-natural-language': 'en',
+    'printer-uri': uri,
+    'job-id': jobId
+  }
+});
+const myWriteStream = ... // get stream from somewhere
+
+ipp.request(uri, data, myWriteStream, function(err) {
+  if (err) {
+    return console.log(err);
+  }
+  // res is null, data is piped into myWriteStream
+});
 ```
 
 ## Basic Auth

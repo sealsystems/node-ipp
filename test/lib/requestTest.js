@@ -10,6 +10,7 @@ const rawBody = require('raw-body');
 
 const request = require('../../lib/request');
 const serializer = require('../../lib/serializer');
+const parser = require('../../lib/parser');
 
 const assertBufferEqual = function(buf1, buf2) {
   assert.that(buf1.length).is.equalTo(buf2.length);
@@ -107,11 +108,56 @@ suite('request', () => {
       assert.that(errListen).is.undefined();
 
       request(url.parse(requestMsg['operation-attributes-tag']['job-uri']), myStream, (errRequest, res) => {
+        assert.that(errRequest).is.equalTo(null);
         assert.that(res).is.equalTo(responseMsg);
         done();
       });
       myStream.write(reqBuf);
       myStream.end();
+    });
+  });
+
+  test('Stream response data', (done) => {
+    const reqBuf = serializer(requestMsg);
+    const app = express();
+
+    app.post('/jobs/:job', (req, res) => {
+      assert.that(req.params.job).is.equalTo('06acd811-fe8a-407f-9fd3-628f0c23c1d8');
+      assert.that(req.headers['transfer-encoding']).is.equalTo('chunked');
+      rawBody(req, {}, (errBody, body) => {
+        assert.that(errBody).is.null();
+        assertBufferEqual(body, reqBuf);
+        res.end(serializer(responseMsg));
+      });
+    });
+
+    app.listen(port, (errListen) => {
+      assert.that(errListen).is.undefined();
+      let requestFinished = false;
+      let outputFinished = false;
+      const responses = [];
+      const output = new PassThrough();
+      output.on('data', (chunk) => {
+        responses.push(chunk);
+      });
+      output.once('end', () => {
+        const response = parser(Buffer.concat(responses));
+        delete response.operation;
+        assert.that(response).is.equalTo(responseMsg);
+        outputFinished = true;
+        if (requestFinished) {
+          return done();
+        }
+      });
+
+      request(url.parse(requestMsg['operation-attributes-tag']['job-uri']), reqBuf, output, (errRequest, res) => {
+        assert.that(errRequest).is.equalTo(null);
+        assert.that(res).is.equalTo(null);
+        requestFinished = true;
+        if (outputFinished) {
+          return done();
+        }
+      });
     });
   });
 });
