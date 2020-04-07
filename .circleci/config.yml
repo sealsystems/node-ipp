@@ -49,7 +49,7 @@ jobs:
 
   release:
     docker:
-      - image: 'circleci/node:8'
+      - image: 'circleci/node:12.13.1'
 
     environment:
       <<: *environment
