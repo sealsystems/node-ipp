@@ -17,12 +17,14 @@ update_configs:
           dependency_type: "direct"
           update_type: "all"
     ignored_updates:
+      # Ignore our dev-modules for linting, testing, and releasing since our nightly
+      # build-config update takes care of it
       - match:
-          dependency_name: "@sealsystems/consul"
+          dependency_name: "@sealsystems/eslint-config-es"
       - match:
-          dependency_name: "@sealsystems/seal-consul"
+          dependency_name: "@sealsystems/mocha"
       - match:
-          dependency_name: "seal-consul"
+          dependency_name: "@sealsystems/semantic-release"
     automerged_updates:
       # Auto-merge minor version updates for `seal-…` dependencies
       - match:
