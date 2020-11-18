@@ -1,3 +1,10 @@
+## 2.7.0 (2020-11-18)
+
+### Features
+
+
+timeout for waiting on response ([abd870d](https://github.com/sealsystems/node-ipp/commit/abd870d))
+
 ## 2.6.0 (2020-04-07)
 
 ### Features
