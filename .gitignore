@@ -1,4 +1,5 @@
 # Node.js
+.npmrc
 node_modules/
 npm-debug.log
 
@@ -20,3 +21,6 @@ temp/
 # Misc
 *.stat
 *.log
+
+# VSCode
+.vscode/settings.json

@@ -1,0 +1,61 @@
+name: Nightly
+
+on:
+  schedule:
+    - cron: "30 2 * * *"
+
+jobs:
+  Update-Build-Configuration:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 12.19.0
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.19.0
+          registry-url: https://npm.pkg.github.com/
+          scope: "@sealsystems"
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ env.cache-name }}-12.19.0-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm i
+        env:
+          # Use personal access token, must be set for *each step*
+          NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
+
+      - name: Install yeoman
+        run: npm install --no-save --force yo @sealsystems/generator-seal-node
+        env:
+          # Use personal access token, must be set for *each step*
+          NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
+
+      - name: Update build config
+        run: npx yo @sealsystems/seal-node:oss-module --force
+        env:
+          # Use personal access token, must be set for *each step*
+          NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v2
+        with:
+          title: Update build configuration
+          body: |
+            The build configuration of this project is outdated and may no longer work.
+            This pull request will be merged automatically if there are no conflicts.
+          branch: nightly/update-build-configuration
+          commit-message: Update build configuration
+          committer: CI Build <com.git@sealsystems.de>
+          author: CI Build <com.git@sealsystems.de>
+          reviewers: 
+          team-reviewers: com-infrastructure
+          token: ${{ secrets.CI_TOKEN }}

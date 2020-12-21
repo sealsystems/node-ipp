@@ -1,0 +1,4 @@
+# Set line endings for shell scripts and Markdown files to Unix style
+*.sh text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
