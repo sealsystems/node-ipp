@@ -1,3 +1,10 @@
+## 2.7.1 (2020-12-21)
+
+### Chores
+
+
+Moved builds to Github ([43a9617](https://github.com/sealsystems/node-ipp/commit/43a9617))
+
 ## 2.7.0 (2020-11-18)
 
 ### Features
