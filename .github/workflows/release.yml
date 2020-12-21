@@ -210,7 +210,7 @@ jobs:
     #     # Use personal access token, must be set for *each step*
     #     NODE_AUTH_TOKEN: ${{secrets.CI_TOKEN}}
 
-    - name: Trigger release for npmjs.org
+    - name: Trigger release
       run: npm run release
       env:
         # Use personal access token, must be set for *each step*
