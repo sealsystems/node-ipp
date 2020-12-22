@@ -204,12 +204,6 @@ jobs:
         echo "Patching package.json ..."
         sed -i 's|"registry": "https://npm.pkg.github.com"|"registry": "https://npm.pkg.github.com", "tag": "bugfix"|' package.json
 
-    # - name: Trigger release for GitHub Packages
-    #   run: npm run release
-    #   env:
-    #     # Use personal access token, must be set for *each step*
-    #     NODE_AUTH_TOKEN: ${{secrets.CI_TOKEN}}
-
     - name: Trigger release
       run: npm run release
       env:
