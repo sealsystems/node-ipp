@@ -1,3 +1,10 @@
+## 2.7.3 (2020-12-29)
+
+### Chores
+
+
+Update build config ([b79b9aa](https://github.com/sealsystems/node-ipp/commit/b79b9aa))
+
 ## 2.7.2 (2020-12-21)
 
 ### Chores
