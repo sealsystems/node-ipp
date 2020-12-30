@@ -1,4 +1,4 @@
-name: Publish on npmjs.org
+name: publish-on-npmjs-org
 
 on:
   release:
