@@ -13,7 +13,7 @@ env:
 
 jobs:
   Cancel-Old-Runs:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
     - uses: rokroskar/workflow-run-cleanup-action@master
@@ -27,7 +27,10 @@ jobs:
 
     services:
       mongo:
-        image: plossys/mongodb-rs:3.6.17
+        image: ghcr.io/sealsystems/mongodb-rs:3.6.17
+        credentials:
+          username: ${{ github.actor }}
+          password: ${{ secrets.CI_TOKEN }}
         ports:
         - 27017:27017
       consul:

@@ -11,6 +11,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        # Use personal access token for cloning (and later pushing) code
+        with:
+          token: ${{ secrets.CI_TOKEN }}
 
       - name: Prepare branch nightly/update-build-configuration
         run: |
@@ -80,13 +83,15 @@ jobs:
           set -exo pipefail
 
           # Only create a new PR if there is not already another one
-          if gh pr list | grep -q "nightly/update-build-configuration"; then
+          # Use variable for debugging purposes
+          LIST="$(gh pr list)"
+          if echo "${LIST}" | grep -q "nightly/update-build-configuration"; then
             echo "PR already exists. Skip creating a new one."
             exit 0
           fi
 
           if [ -n "com-infrastructure" ]; then
-            reviewerOption="--reviewers com-infrastructure"
+            reviewerOption="--reviewer com-infrastructure"
           fi
 
           gh pr create \
