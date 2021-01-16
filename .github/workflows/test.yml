@@ -61,13 +61,13 @@ jobs:
       run: npm ci
       env:
         # Use personal access token, must be set for *each step*
-        NODE_AUTH_TOKEN: ${{secrets.CI_TOKEN}}
+        NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
 
     - name: Run tests
       run: npm run bot
       env:
         # Use personal access token, must be set for *each step*
-        NODE_AUTH_TOKEN: ${{secrets.CI_TOKEN}}
+        NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
 
   # Test-Windows:
   #   needs:
@@ -151,10 +151,10 @@ jobs:
   #     run: npm ci
   #     env:
   #       # Use personal access token, must be set for *each step*
-  #       NODE_AUTH_TOKEN: ${{secrets.CI_TOKEN}}
+  #       NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
 
   #   - name: Run tests
   #     run: npm run bot
   #     env:
   #       # Use personal access token, must be set for *each step*
-  #       NODE_AUTH_TOKEN: ${{secrets.CI_TOKEN}}
+  #       NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
