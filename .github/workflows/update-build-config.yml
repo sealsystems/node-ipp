@@ -4,6 +4,8 @@ on:
   schedule:
     # 0:30
     - cron: "30 0 * * *"
+  workflow_dispatch:
+    # No inputs needed
 
 jobs:
   Update-Build-Configuration:
@@ -90,8 +92,8 @@ jobs:
             exit 0
           fi
 
-          if [ -n "com-infrastructure" ]; then
-            reviewerOption="--reviewer com-infrastructure"
+          if [ -n "sealsystems/com-infrastructure" ]; then
+            reviewerOption="--reviewer sealsystems/com-infrastructure"
           fi
 
           gh pr create \
@@ -101,4 +103,4 @@ jobs:
           This pull request will be merged automatically if there are no conflicts." \
           ${reviewerOption}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
