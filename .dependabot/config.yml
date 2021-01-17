@@ -15,9 +15,8 @@ update_configs:
       # Trigger all updates for dependencies by default
       - match:
           dependency_type: "direct"
-          # NOTE: Allow only security updates for now in order to decrease GitHub Actions activity
-          # update_type: "all"
-          update_type: "security"
+          # Update all outdated dependencies, not only security patches
+          update_type: "all"
     ignored_updates:
       # Ignore our dev-modules for linting, testing, and releasing since our nightly
       # build-config update takes care of it
@@ -28,10 +27,6 @@ update_configs:
       - match:
           dependency_name: "@sealsystems/semantic-release"
     automerged_updates:
-      # Auto-merge minor version updates for `seal-…` dependencies
-      - match:
-          dependency_name: "seal-*"
-          update_type: "semver:minor"
       # Auto-merge minor version updates for `@sealsystems/…-` dependencies
       - match:
           dependency_name: "@sealsystems/*"
