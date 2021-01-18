@@ -1,3 +1,10 @@
+## 2.7.4 (2021-01-18)
+
+### Bug Fixes
+
+
+Set marker-colors, marker-names type to setof name ([f9c3d6a](https://github.com/sealsystems/node-ipp/commit/f9c3d6a))
+
 ## 2.7.3 (2020-12-29)
 
 ### Chores
