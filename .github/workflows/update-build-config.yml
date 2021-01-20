@@ -19,7 +19,6 @@ jobs:
 
       - name: Prepare branch nightly/update-build-configuration
         run: |
-          set -exo pipefail
           git fetch --quiet
           git checkout -B nightly/update-build-configuration
           git reset --hard ${GITHUB_REF#refs/heads/}
@@ -82,12 +81,8 @@ jobs:
       - name: Create pull request
         if: ${{ env.CREATE_PR == '1' }}
         run: |
-          set -exo pipefail
-
           # Only create a new PR if there is not already another one
-          # Use variable for debugging purposes
-          LIST="$(gh pr list)"
-          if echo "${LIST}" | grep -q "nightly/update-build-configuration"; then
+          if gh pr list | grep -q "nightly/update-build-configuration"; then
             echo "PR already exists. Skip creating a new one."
             exit 0
           fi
