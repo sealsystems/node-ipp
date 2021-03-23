@@ -27,7 +27,7 @@ jobs:
 
     services:
       mongo:
-        image: ghcr.io/sealsystems/mongodb-rs:3.6.17
+        image: ghcr.io/sealsystems/mongodb-rs:4.4.4
         credentials:
           username: ${{ github.actor }}
           password: ${{ secrets.CI_TOKEN }}
@@ -41,10 +41,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Use Node.js 14.15.4
+    - name: Use Node.js 14.16.0
       uses: actions/setup-node@v1
       with:
-        node-version: 14.15.4
+        node-version: 14.16.0
         registry-url: https://npm.pkg.github.com/
         scope: "@sealsystems"
 
@@ -55,7 +55,7 @@ jobs:
       with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
         path: ~/.npm
-        key: ${{ runner.os }}-${{ env.cache-name }}-14.15.4-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-${{ env.cache-name }}-14.16.0-${{ hashFiles('**/package-lock.json') }}
 
     - name: Install dependencies
       run: npm ci
@@ -77,24 +77,24 @@ jobs:
   #   steps:
   #   - uses: actions/checkout@v2
 
-  #   - name: Use Node.js 14.15.4
+  #   - name: Use Node.js 14.16.0
   #     uses: actions/setup-node@v1
   #     with:
-  #       node-version: 14.15.4
+  #       node-version: 14.16.0
   #       registry-url: https://npm.pkg.github.com/
   #       scope: "@sealsystems"
 
-  #   - name: Install MongoDB 3.6.17
+  #   - name: Install MongoDB 4.4.4
   #     run: |
-  #       Write-Host "Downloading https://fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-3.6.17.zip ..."
+  #       Write-Host "Downloading https://fastdl.mongodb.org/windows/mongodb-windows-x86_64-4.4.4.zip ..."
   #       (New-Object Net.WebClient).DownloadFile(
-  #         "https://fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-3.6.17.zip",
-  #         "C:\mongodb-win32-x86_64-2008plus-ssl-3.6.17.zip"
+  #         "https://fastdl.mongodb.org/windows/mongodb-windows-x86_64-4.4.4.zip",
+  #         "C:\mongodb-windows-x86_64-4.4.4.zip"
   #       )
 
   #       Write-Host "Extracting zip archive to C:\mongodb ..."
-  #       Expand-Archive "C:\mongodb-win32-x86_64-2008plus-ssl-3.6.17.zip" -DestinationPath "C:\"
-  #       Rename-Item "C:\mongodb-win32-x86_64-2008plus-ssl-3.6.17" "C:\mongodb"
+  #       Expand-Archive "C:\mongodb-windows-x86_64-4.4.4.zip" -DestinationPath "C:\"
+  #       Rename-Item "C:\mongodb-win32-x86_64-windows-4.4.4" "C:\mongodb"
 
   #       Write-Host "Creating necessary folders in C:\mongodb ..."
   #       mkdir c:\mongodb\data\db | Out-Null
