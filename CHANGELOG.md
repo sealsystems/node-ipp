@@ -1,3 +1,10 @@
+## 2.7.5 (2021-05-03)
+
+### Chores
+
+
+Use correct timezone ([612dd8f](https://github.com/sealsystems/node-ipp/commit/612dd8f))
+
 ## 2.7.4 (2021-01-18)
 
 ### Bug Fixes
