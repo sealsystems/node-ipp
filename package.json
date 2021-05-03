@@ -59,5 +59,8 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "moment": "2.29.1"
   }
 }
