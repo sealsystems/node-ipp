@@ -1,3 +1,10 @@
+## 2.7.6 (2021-05-20)
+
+### Chores
+
+
+Error test ([f701ad7](https://github.com/sealsystems/node-ipp/commit/f701ad7))
+
 ## 2.7.5 (2021-05-03)
 
 ### Chores
