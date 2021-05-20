@@ -117,6 +117,35 @@ suite('request', () => {
     });
   });
 
+  test('POST stream data with parsing error', (done) => {
+    const myStream = new PassThrough();
+    const reqBuf = serializer(requestMsg);
+    const app = express();
+
+    app.post('/jobs/:job', (req, res) => {
+      assert.that(req.params.job).is.equalTo('06acd811-fe8a-407f-9fd3-628f0c23c1d8');
+      assert.that(req.headers['transfer-encoding']).is.equalTo('chunked');
+      rawBody(req, {}, (errBody, body) => {
+        assert.that(errBody).is.null();
+        assertBufferEqual(body, reqBuf);
+        const newBuf = serializer(responseMsg);
+        res.end(newBuf.slice(0, 1));
+      });
+    });
+
+    app.listen(port, (errListen) => {
+      assert.that(errListen).is.undefined();
+
+      request(url.parse(requestMsg['operation-attributes-tag']['job-uri']), myStream, (errRequest, res) => {
+        assert.that(errRequest.message).is.equalTo('NotEnoughData');
+        assert.that(res).is.undefined();
+        done();
+      });
+      myStream.write(reqBuf);
+      myStream.end();
+    });
+  });
+
   test('Stream response data', (done) => {
     const reqBuf = serializer(requestMsg);
     const app = express();
