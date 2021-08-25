@@ -32,6 +32,21 @@ suite('printer', () => {
     assert.that(ippPrinter.execute).is.ofType('function');
   });
 
+  test('uses protocol from url', async () => {
+    const url = 'hugo://localhost:6631/ipp/print/foo';
+    const ippPrinter = printer(url);
+
+    assert.that(ippPrinter.uri).is.equalTo('hugo://localhost:6631/ipp/print/foo');
+  });
+
+  test('uses protocol from options.uri', async () => {
+    const url = 'hugo://localhost:6631/ipp/print/foo';
+    const options = { uri: 'hansi://localhost:6631/ipp/print/bar' };
+    const ippPrinter = printer(url, options);
+
+    assert.that(ippPrinter.uri).is.equalTo('hansi://localhost:6631/ipp/print/bar');
+  });
+
   test('printer.execute calls request without output stream', (done) => {
     const uri = 'ipp://localhost:6631/ipp/print/foo';
     const ippPrinter = printer(uri);
