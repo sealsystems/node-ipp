@@ -1,3 +1,10 @@
+## 2.7.7 (2021-08-25)
+
+### Chores
+
+
+Use url protocol as default for uri ([d1d3338](https://github.com/sealsystems/node-ipp/commit/d1d3338))
+
 ## 2.7.6 (2021-05-20)
 
 ### Chores
