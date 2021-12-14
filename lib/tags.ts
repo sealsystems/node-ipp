@@ -1,5 +1,6 @@
 'use strict';
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'xref'.
 const xref = require('./ipputil').xref;
 
 /* eslint-disable line-comment-position */
@@ -8,6 +9,7 @@ const xref = require('./ipputil').xref;
 // http://www.iana.org/assignments/ipp-registrations/ipp-registrations.xml#ipp-registrations-7
 // http://www.iana.org/assignments/ipp-registrations/ipp-registrations.xml#ipp-registrations-8
 // http://www.iana.org/assignments/ipp-registrations/ipp-registrations.xml#ipp-registrations-9
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'tags'.
 const tags = [
   null, // 0x00 http://tools.ietf.org/html/rfc2910#section-3.5.1
   'operation-attributes-tag', // 0x01 http://tools.ietf.org/html/rfc2910#section-3.5.1
@@ -87,4 +89,5 @@ const tags = [
 ];
 
 tags[0x7f] = 'extension'; // http://tools.ietf.org/html/rfc2910#section-3.5.2
+// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'module'. Do you need to install ... Remove this comment to see the full error message
 module.exports = xref(tags);

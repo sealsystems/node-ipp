@@ -1,18 +1,28 @@
 'use strict';
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'PassThroug... Remove this comment to see the full error message
 const PassThrough = require('stream').PassThrough;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'url'.
 const url = require('url');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const assert = require('assertthat');
+// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const express = require('express');
+// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const freeport = require('freeport');
+// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const rawBody = require('raw-body');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'request'.
 const request = require('../../lib/request');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'serializer... Remove this comment to see the full error message
 const serializer = require('../../lib/serializer');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'parser'.
 const parser = require('../../lib/parser');
 
-const assertBufferEqual = function(buf1, buf2) {
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assertBuff... Remove this comment to see the full error message
+const assertBufferEqual = function(buf1: any, buf2: any) {
   assert.that(buf1.length).is.equalTo(buf2.length);
   for (let i = 0; i < buf1.length; i++) {
     assert.that(buf1[i]).is.equalTo(buf2[i]);
@@ -21,13 +31,15 @@ const assertBufferEqual = function(buf1, buf2) {
   return true;
 };
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'suite'. Do you need to install t... Remove this comment to see the full error message
 suite('request', () => {
-  let port;
-  let requestMsg;
-  let responseMsg;
+  let port: any;
+  let requestMsg: any;
+  let responseMsg: any;
 
-  setup((done) => {
-    freeport((errPort, aFreePort) => {
+  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'setup'.
+  setup((done: any) => {
+    freeport((errPort: any, aFreePort: any) => {
       assert.that(errPort).is.null();
 
       port = aFreePort;
@@ -60,54 +72,59 @@ suite('request', () => {
     });
   });
 
-  test('is a function', (done) => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
+  test('is a function', (done: any) => {
     assert.that(request).is.ofType('function');
     done();
   });
 
-  test('POST buffer data', (done) => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
+  test('POST buffer data', (done: any) => {
     const reqBuf = serializer(requestMsg);
     const app = express();
 
-    app.post('/jobs/:job', (req, res) => {
+    app.post('/jobs/:job', (req: any, res: any) => {
       assert.that(req.params.job).is.equalTo('06acd811-fe8a-407f-9fd3-628f0c23c1d8');
       assert.that(req.headers['transfer-encoding']).is.equalTo('chunked');
-      rawBody(req, {}, (errBody, body) => {
+      rawBody(req, {}, (errBody: any, body: any) => {
         assert.that(errBody).is.null();
         assertBufferEqual(body, reqBuf);
         res.end(serializer(responseMsg));
       });
     });
 
-    app.listen(port, (errListen) => {
+    app.listen(port, (errListen: any) => {
       assert.that(errListen).is.undefined();
 
-      request(url.parse(requestMsg['operation-attributes-tag']['job-uri']), reqBuf, (errRequest, res) => {
+      // @ts-expect-error ts-migrate(2554) FIXME: Expected 4 arguments, but got 3.
+      request(url.parse(requestMsg['operation-attributes-tag']['job-uri']), reqBuf, (errRequest: any, res: any) => {
         assert.that(res).is.equalTo(responseMsg);
         done();
       });
     });
   });
 
-  test('POST stream data', (done) => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
+  test('POST stream data', (done: any) => {
     const myStream = new PassThrough();
     const reqBuf = serializer(requestMsg);
     const app = express();
 
-    app.post('/jobs/:job', (req, res) => {
+    app.post('/jobs/:job', (req: any, res: any) => {
       assert.that(req.params.job).is.equalTo('06acd811-fe8a-407f-9fd3-628f0c23c1d8');
       assert.that(req.headers['transfer-encoding']).is.equalTo('chunked');
-      rawBody(req, {}, (errBody, body) => {
+      rawBody(req, {}, (errBody: any, body: any) => {
         assert.that(errBody).is.null();
         assertBufferEqual(body, reqBuf);
         res.end(serializer(responseMsg));
       });
     });
 
-    app.listen(port, (errListen) => {
+    app.listen(port, (errListen: any) => {
       assert.that(errListen).is.undefined();
 
-      request(url.parse(requestMsg['operation-attributes-tag']['job-uri']), myStream, (errRequest, res) => {
+      // @ts-expect-error ts-migrate(2554) FIXME: Expected 4 arguments, but got 3.
+      request(url.parse(requestMsg['operation-attributes-tag']['job-uri']), myStream, (errRequest: any, res: any) => {
         assert.that(errRequest).is.equalTo(null);
         assert.that(res).is.equalTo(responseMsg);
         done();
@@ -117,15 +134,16 @@ suite('request', () => {
     });
   });
 
-  test('POST stream data with parsing error', (done) => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
+  test('POST stream data with parsing error', (done: any) => {
     const myStream = new PassThrough();
     const reqBuf = serializer(requestMsg);
     const app = express();
 
-    app.post('/jobs/:job', (req, res) => {
+    app.post('/jobs/:job', (req: any, res: any) => {
       assert.that(req.params.job).is.equalTo('06acd811-fe8a-407f-9fd3-628f0c23c1d8');
       assert.that(req.headers['transfer-encoding']).is.equalTo('chunked');
-      rawBody(req, {}, (errBody, body) => {
+      rawBody(req, {}, (errBody: any, body: any) => {
         assert.that(errBody).is.null();
         assertBufferEqual(body, reqBuf);
         const newBuf = serializer(responseMsg);
@@ -133,10 +151,11 @@ suite('request', () => {
       });
     });
 
-    app.listen(port, (errListen) => {
+    app.listen(port, (errListen: any) => {
       assert.that(errListen).is.undefined();
 
-      request(url.parse(requestMsg['operation-attributes-tag']['job-uri']), myStream, (errRequest, res) => {
+      // @ts-expect-error ts-migrate(2554) FIXME: Expected 4 arguments, but got 3.
+      request(url.parse(requestMsg['operation-attributes-tag']['job-uri']), myStream, (errRequest: any, res: any) => {
         assert.that(errRequest.message).is.equalTo('NotEnoughData');
         assert.that(res).is.undefined();
         done();
@@ -146,31 +165,34 @@ suite('request', () => {
     });
   });
 
-  test('Stream response data', (done) => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
+  test('Stream response data', (done: any) => {
     const reqBuf = serializer(requestMsg);
     const app = express();
 
-    app.post('/jobs/:job', (req, res) => {
+    app.post('/jobs/:job', (req: any, res: any) => {
       assert.that(req.params.job).is.equalTo('06acd811-fe8a-407f-9fd3-628f0c23c1d8');
       assert.that(req.headers['transfer-encoding']).is.equalTo('chunked');
-      rawBody(req, {}, (errBody, body) => {
+      rawBody(req, {}, (errBody: any, body: any) => {
         assert.that(errBody).is.null();
         assertBufferEqual(body, reqBuf);
         res.end(serializer(responseMsg));
       });
     });
 
-    app.listen(port, (errListen) => {
+    app.listen(port, (errListen: any) => {
       assert.that(errListen).is.undefined();
       let requestFinished = false;
       let outputFinished = false;
-      const responses = [];
+      const responses: any = [];
       const output = new PassThrough();
-      output.on('data', (chunk) => {
+      output.on('data', (chunk: any) => {
         responses.push(chunk);
       });
       output.once('end', () => {
+        // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
         const response = parser(Buffer.concat(responses));
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'operation' does not exist on type '{}'.
         delete response.operation;
         assert.that(response).is.equalTo(responseMsg);
         outputFinished = true;
@@ -179,7 +201,7 @@ suite('request', () => {
         }
       });
 
-      request(url.parse(requestMsg['operation-attributes-tag']['job-uri']), reqBuf, output, (errRequest, res) => {
+      request(url.parse(requestMsg['operation-attributes-tag']['job-uri']), reqBuf, output, (errRequest: any, res: any) => {
         assert.that(errRequest).is.equalTo(null);
         assert.that(res).is.equalTo(null);
         requestFinished = true;

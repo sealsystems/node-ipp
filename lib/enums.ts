@@ -1,12 +1,15 @@
 'use strict';
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'xref'.
 const xref = require('./ipputil').xref;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'statusCode... Remove this comment to see the full error message
 const statusCodes = require('./statusCodes');
 
 /* eslint-disable no-sparse-arrays */
 /* eslint-disable line-comment-position */
 /* eslint-disable no-inline-comments */
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'enums'.
 const enums = {
   'document-state': xref([
     null,
@@ -291,14 +294,24 @@ const enums = {
   ])
 };
 
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 enums['finishings-default'] = enums.finishings;
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 enums['finishings-ready'] = enums.finishings;
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 enums['finishings-supported'] = enums.finishings;
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 enums['media-source-feed-orientation'] = enums['orientation-requested'];
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 enums['orientation-requested-default'] = enums['orientation-requested'];
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 enums['orientation-requested-supported'] = enums['orientation-requested']; // 1setOf
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 enums['print-quality-default'] = enums['print-quality'];
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 enums['print-quality-supported'] = enums['print-quality']; // 1setOf
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 enums['output-device-job-state'] = enums['job-state'];
 
+// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'module'. Do you need to install ... Remove this comment to see the full error message
 module.exports = enums;

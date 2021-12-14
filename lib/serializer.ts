@@ -1,16 +1,26 @@
 'use strict';
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'attributes... Remove this comment to see the full error message
 const attributes = require('./attributes');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'enums'.
 const enums = require('./enums');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'keywords'.
 const keywords = require('./keywords');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'operations... Remove this comment to see the full error message
 const operations = require('./enums')['operations-supported'];
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'cupsOperat... Remove this comment to see the full error message
 const cupsOperations = require('./enums')['cups-operations-supported'];
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'statusCode... Remove this comment to see the full error message
 const statusCodes = require('./statusCodes');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'tags'.
 const tags = require('./tags');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'versions'.
 const versions = require('./versions');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'isReadable... Remove this comment to see the full error message
 const isReadableStream = require('./isReadableStream');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RS'.
 const RS = '\u001e';
 
 const random = () => {
@@ -21,35 +31,38 @@ const random = () => {
   );
 };
 
-const timezone = (d) => {
+const timezone = (d: any) => {
   const z = d.getTimezoneOffset();
 
   return [z > 0 ? '-' : '+', ~~(Math.abs(z) / 60), Math.abs(z) % 60];
 };
 
-const serializer = (msg) => {
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'serializer... Remove this comment to see the full error message
+const serializer = (msg: any) => {
+  // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
   let buf = Buffer.alloc(10240);
   let position = 0;
 
-  const checkBufferSize = (length) => {
+  const checkBufferSize = (length: any) => {
     if (position + length > buf.length) {
+      // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
       buf = Buffer.concat([buf], 2 * buf.length);
     }
   };
 
-  const write1 = (val) => {
+  const write1 = (val: any) => {
     checkBufferSize(1);
     buf.writeUInt8(val, position);
     position += 1;
   };
 
-  const write2 = (val) => {
+  const write2 = (val: any) => {
     checkBufferSize(2);
     buf.writeUInt16BE(val, position);
     position += 2;
   };
 
-  const write4 = (val) => {
+  const write4 = (val: any) => {
     checkBufferSize(4);
     if (val < 0) {
       val += 0x100000000;
@@ -59,7 +72,8 @@ const serializer = (msg) => {
   };
 
   // write a string to the buffer
-  const writeStr = (str, enc) => {
+  const writeStr = (str: any, enc: any) => {
+    // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
     const length = Buffer.byteLength(str);
 
     checkBufferSize(length);
@@ -68,7 +82,8 @@ const serializer = (msg) => {
   };
 
   // write a string to the buffer, prefixing it with the size of the buffer
-  const write = (str, enc) => {
+  const write = (str: any, enc: any) => {
+    // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
     const length = Buffer.byteLength(str);
 
     write2(length);
@@ -90,7 +105,7 @@ const serializer = (msg) => {
     'document-attributes-tag': 'Document Description'
   };
 
-  const resolveAlternates = (array, name, value) => {
+  const resolveAlternates = (array: any, name: any, value: any) => {
     switch (array.alts) {
       case 'keyword,name':
       case 'keyword,name,novalue':
@@ -98,6 +113,7 @@ const serializer = (msg) => {
           return array.lookup.novalue;
         }
 
+        // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         return keywords[name].indexOf(value) !== -1 ? array.lookup.keyword : array.lookup.name;
 
       case 'integer,rangeOfInteger':
@@ -116,6 +132,7 @@ const serializer = (msg) => {
         return value !== null ? array.lookup.uri : array.lookup.novalue;
 
       case 'enumeration,unknown':
+        // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         return enums[name][value] ? array.lookup.enumeration : array.lookup.unknown;
 
       case 'enumeration,novalue':
@@ -129,7 +146,7 @@ const serializer = (msg) => {
     }
   };
 
-  const getTag = (syntax, name, value) => {
+  const getTag = (syntax: any, name: any, value: any) => {
     let tag = syntax.tag;
 
     if (!tag) {
@@ -141,7 +158,7 @@ const serializer = (msg) => {
     return tag;
   };
 
-  const writeValue = (tag, value, submembers) => {
+  const writeValue = (tag: any, value: any, submembers: any) => {
     let parts, tz;
 
     switch (tag) {
@@ -191,6 +208,7 @@ const serializer = (msg) => {
         tz = timezone(value);
 
         // + or -
+        // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
         writeStr(tz[0]);
 
         // hours
@@ -216,6 +234,7 @@ const serializer = (msg) => {
       case tags.textWithoutLanguage:
       case tags.octetString:
       case tags.memberAttrName:
+        // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
         return write(value);
 
       case tags.keyword:
@@ -244,7 +263,7 @@ const serializer = (msg) => {
     }
   };
 
-  const writeCollection = (value, members) => {
+  const writeCollection = (value: any, members: any) => {
     Object.keys(value).forEach((key) => {
       let subvalue = value[key];
       let subsyntax = members[key];
@@ -261,6 +280,7 @@ const serializer = (msg) => {
       const tag = getTag(subsyntax, key, subvalue);
 
       if (tag === tags.enum) {
+        // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         subvalue = enums[key][subvalue];
       }
 
@@ -268,6 +288,7 @@ const serializer = (msg) => {
 
       // empty name
       write2(0);
+      // @ts-expect-error ts-migrate(2554) FIXME: Expected 3 arguments, but got 2.
       writeValue(tags.memberAttrName, key);
       write1(tag);
 
@@ -284,9 +305,10 @@ const serializer = (msg) => {
     write2(0);
   };
 
-  const attr = (group, name, obj) => {
+  const attr = (group: any, name: any, obj: any) => {
     const groupName = Array.isArray(group)
       ? group.find((grp) => {
+          // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           return attributes[grp][name];
         })
       : group;
@@ -296,6 +318,7 @@ const serializer = (msg) => {
       return;
     }
 
+    // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     const syntax = attributes[groupName][name];
 
     // Ignore unknown attributes.
@@ -309,17 +332,19 @@ const serializer = (msg) => {
       values = [values];
     }
 
-    values.forEach((value, i) => {
+    values.forEach((value: any, i: any) => {
       // we need to re-evaluate the alternates every time
       const syntax2 = Array.isArray(syntax) ? resolveAlternates(syntax, name, value) : syntax;
       const tag = getTag(syntax2, name, value);
 
       if (tag === tags.enum) {
+        // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         value = enums[name][value];
       }
 
       write1(tag);
       if (i === 0) {
+        // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
         write(name);
       } else {
         // empty name
@@ -330,7 +355,7 @@ const serializer = (msg) => {
     });
   };
 
-  const writeGroup = (tag) => {
+  const writeGroup = (tag: any) => {
     // support writing multiple sets of the same group with an Array
     const groupsOrAttrs = msg[tag];
 
@@ -340,6 +365,7 @@ const serializer = (msg) => {
 
     const attributeGroups = Array.isArray(groupsOrAttrs) ? groupsOrAttrs : [groupsOrAttrs];
 
+    // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     const groupname = groupmap[tag];
 
     attributeGroups.forEach((attrs) => {
@@ -348,6 +374,7 @@ const serializer = (msg) => {
       // 'attributes-charset' and 'attributes-natural-language' need to come first- so we sort them to the front
       if (tag === tags['operation-attributes-tag']) {
         keys = keys.sort((a, b) => {
+          // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           return (special[a] || 3) - (special[b] || 3);
         });
       }
@@ -383,10 +410,12 @@ const serializer = (msg) => {
     return buf.slice(0, position);
   }
 
+  // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
   if (!Buffer.isBuffer(msg.data)) {
     throw new Error('Data must be a Buffer or a stream.Readable.');
   }
 
+  // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
   const buf2 = Buffer.alloc(position + msg.data.length);
 
   buf.copy(buf2, 0, 0, position);
@@ -395,4 +424,5 @@ const serializer = (msg) => {
   return buf2;
 };
 
+// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'module'. Do you need to install ... Remove this comment to see the full error message
 module.exports = serializer;

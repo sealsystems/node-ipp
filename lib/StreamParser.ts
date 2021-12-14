@@ -1,19 +1,26 @@
 'use strict';
 
+// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 const { Transform } = require('stream');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'parse'.
 const parse = require('./parser');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'StreamPars... Remove this comment to see the full error message
 class StreamParser extends Transform {
-  constructor(options) {
+  buf: any;
+  emit: any;
+  constructor(options: any) {
     super(options);
+    // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
     this.buf = Buffer.alloc(0);
   }
 
-  _transform(data, encoding, callback) {
+  _transform(data: any, encoding: any, callback: any) {
     if (!this.buf) {
       return callback(null, data);
     }
+    // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
     this.buf = Buffer.concat([this.buf, data]);
 
     try {
@@ -39,4 +46,5 @@ class StreamParser extends Transform {
   }
 }
 
+// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'module'. Do you need to install ... Remove this comment to see the full error message
 module.exports = StreamParser;

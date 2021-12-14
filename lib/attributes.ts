@@ -5,17 +5,18 @@
 // close to what you will see in the spec. A bit of processing is done at the end
 // to convert it to one big object tree.
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'tags'.
 const tags = require('./tags');
 const MAX = {};
 
-const text = (max) => {
+const text = (max: any) => {
   if (!max) {
     max = 1023;
   }
 
   return { type: 'text', max };
 };
-const integer = (min, max) => {
+const integer = (min: any, max: any) => {
   if (max === MAX || max === undefined) {
     max = 2147483647;
   }
@@ -26,7 +27,7 @@ const integer = (min, max) => {
   return { type: 'integer', tag: tags.integer, min, max };
 };
 
-const rangeOfInteger = (min, max) => {
+const rangeOfInteger = (min: any, max: any) => {
   if (max === MAX || max === undefined) {
     max = 2147483647;
   }
@@ -43,6 +44,7 @@ const boolean = () => {
 const charset = () => {
   return { type: 'charset', tag: tags.charset, max: 63 };
 };
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'keyword'.
 const keyword = () => {
   return { type: 'keyword', tag: tags.keyword, min: 1, max: 1023 };
 };
@@ -55,7 +57,7 @@ const dateTime = () => {
 const mimeMediaType = () => {
   return { type: 'mimeMediaType', tag: tags.mimeMediaType, max: 255 };
 };
-const uri = (max) => {
+const uri = (max: any) => {
   return { type: 'uri', tag: tags.uri, max: max || 1023 };
 };
 const uriScheme = () => {
@@ -70,13 +72,14 @@ const resolution = () => {
 const unknown = () => {
   return { type: 'unknown', tag: tags.unknown };
 };
-const name = (max) => {
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'name'.
+const name = (max: any) => {
   return { type: 'name', max: max || 1023 };
 };
 const novalue = () => {
   return { type: 'novalue', tag: tags['no-value'] };
 };
-const octetString = (max) => {
+const octetString = (max: any) => {
   return { type: 'octetString', tag: tags.octetString, max: max || 1023 };
 };
 
@@ -84,18 +87,21 @@ const octetString = (max) => {
 // I want to keep the look and feel of the code close to
 // that of the RFCs. So, this _ (underscore) const is => =
 // used to group alternates and not be intrusive visually.
-const _ = (arg1, arg2) => {
+const _ = (arg1: any, arg2: any) => {
   // const args = Array.prototype.slice.call(arguments);
   const args = [arg1, arg2];
 
+  // @ts-expect-error ts-migrate(2339) FIXME: Property 'lookup' does not exist on type 'any[]'.
   args.lookup = {};
   const deferred = () => {
     args.forEach((a, i) => {
       if (typeof a === 'function') {
         args[i] = a();
       }
+      // @ts-expect-error ts-migrate(2339) FIXME: Property 'lookup' does not exist on type 'any[]'.
       args.lookup[args[i].type] = args[i];
     });
+    // @ts-expect-error ts-migrate(2339) FIXME: Property 'alts' does not exist on type 'any[]'.
     args.alts = Object.keys(args.lookup)
       .sort()
       .join();
@@ -112,7 +118,7 @@ const _ = (arg1, arg2) => {
 
 // In IPP, "1setOf" just means "Array"... but it must 1 or more items
 // In javascript, functions can't start with a number- so let's just use...
-const setof = (type) => {
+const setof = (type: any) => {
   if (type.name === 'deferred') {
     return function deferred() {
       type = type();
@@ -129,10 +135,11 @@ const setof = (type) => {
   return type;
 };
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'attributes... Remove this comment to see the full error message
 const attributes = {};
 
 // convert all the syntactical sugar to an object tree
-const resolve = (obj) => {
+const resolve = (obj: any) => {
   if (obj.type) {
     return obj;
   }
@@ -152,7 +159,7 @@ const resolve = (obj) => {
 // In IPP, a "collection" is an set of name-value
 // pairs. In javascript, we call them "Objects".
 /* eslint-disable no-shadow */
-const collection = (group, name) => {
+const collection = (group: any, name: any) => {
   /* eslint-enable no-shadow */
   if (!group && !name) {
     return { type: 'collection', tag: tags.begCollection };
@@ -163,6 +170,7 @@ const collection = (group, name) => {
       return {
         type: 'collection',
         tag: tags.begCollection,
+        // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         members: attributes[group][name].members
       };
     };
@@ -182,6 +190,7 @@ const collection = (group, name) => {
   return defer ? deferred : deferred();
 };
 
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 attributes['Document Description'] = {
   'attributes-charset': charset,
   'attributes-natural-language': naturalLanguage,
@@ -237,6 +246,7 @@ attributes['Document Description'] = {
   'number-up-actual': setof(integer),
   'orientation-requested-actual': setof(enumeration),
   'output-bin-actual': setof(name),
+  // @ts-expect-error ts-migrate(2349) FIXME: This expression is not callable.
   'output-device-assigned': name(127),
   'overrides-actual': setof(collection('Document Template', 'overrides')),
   'page-delivery-actual': setof(keyword),
@@ -265,6 +275,7 @@ attributes['Document Description'] = {
   'y-side1-image-shift-actual': setof(integer),
   'y-side2-image-shift-actual': setof(integer)
 };
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 attributes['Document Template'] = {
   copies: integer(1, MAX),
   'cover-back': collection('Job Template', 'cover-back'),
@@ -283,6 +294,7 @@ attributes['Document Template'] = {
   'number-up': integer(1, MAX),
   'orientation-requested': enumeration,
   overrides: setof(
+    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
     collection({
       // Any Document Template attribute (TODO)
       'document-copies': setof(rangeOfInteger),
@@ -313,6 +325,7 @@ attributes['Document Template'] = {
   'y-side1-image-shift': integer,
   'y-side2-image-shift': integer
 };
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 attributes['Event Notifications'] = {
   'notify-subscribed-event': keyword,
   'notify-text': text,
@@ -322,6 +335,7 @@ attributes['Event Notifications'] = {
   'job-state-reasons': setof(keyword),
   'job-state': enumeration
 };
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 attributes['Job Description'] = {
   'attributes-charset': charset,
   'attributes-natural-language': naturalLanguage,
@@ -404,7 +418,9 @@ attributes['Job Description'] = {
   'orientation-requested-actual': setof(enumeration),
   'original-requesting-user-name': name,
   'output-bin-actual': setof(_(keyword, name)),
+  // @ts-expect-error ts-migrate(2349) FIXME: This expression is not callable.
   'output-device-actual': setof(name(127)),
+  // @ts-expect-error ts-migrate(2349) FIXME: This expression is not callable.
   'output-device-assigned': name(127),
   'output-device-job-state': enumeration,
   'output-device-job-state-message': text,
@@ -435,13 +451,16 @@ attributes['Job Description'] = {
   'y-side1-image-shift-actual': setof(integer),
   'y-side2-image-shift-actual': setof(integer)
 };
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 attributes['Job Template'] = {
   copies: integer(1, MAX),
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
   'cover-back': collection({
     'cover-type': keyword,
     media: _(keyword, name),
     'media-col': collection('Job Template', 'media-col')
   }),
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
   'cover-front': collection({
     'cover-type': keyword,
     media: _(keyword, name),
@@ -449,8 +468,10 @@ attributes['Job Template'] = {
   }),
   'feed-orientation': keyword,
   finishings: setof(enumeration),
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
   'finishings-col': collection({
     'finishing-template': name,
+    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
     stitching: collection({
       'stitching-locations': setof(integer(0, MAX)),
       'stitching-offset': integer(0, MAX),
@@ -462,6 +483,7 @@ attributes['Job Template'] = {
   'force-front-side': setof(integer(1, MAX)),
   'imposition-template': _(keyword, name),
   'insert-sheet': setof(
+    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
     collection({
       'insert-after-page-number': integer(0, MAX),
       'insert-count': integer(0, MAX),
@@ -470,6 +492,7 @@ attributes['Job Template'] = {
     })
   ),
   'job-account-id': name,
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
   'job-accounting-sheets': collection({
     'job-accounting-output-bin': _(keyword, name),
     'job-accounting-sheets-type': _(keyword, name),
@@ -483,6 +506,7 @@ attributes['Job Template'] = {
   'job-delay-output-until': _(keyword, name),
   'job-delay-output-until-time': dateTime,
   'job-error-action': keyword,
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
   'job-error-sheet': collection({
     'job-error-sheet-type': _(keyword, name),
     'job-error-sheet-when': keyword,
@@ -497,9 +521,11 @@ attributes['Job Template'] = {
   'job-phone-number': uri,
   'job-priority': integer(1, 100),
   'job-recipient-name': name,
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
   'job-save-disposition': collection({
     'save-disposition': keyword,
     'save-info': setof(
+      // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
       collection({
         'save-document-format': mimeMediaType,
         'save-location': uri,
@@ -509,12 +535,14 @@ attributes['Job Template'] = {
   }),
   'job-sheet-message': text,
   'job-sheets': _(keyword, name),
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
   'job-sheets-col': collection({
     'job-sheets': _(keyword, name),
     media: _(keyword, name),
     'media-col': collection('Job Template', 'media-col')
   }),
   media: _(keyword, name),
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
   'media-col': collection({
     'media-back-coating': _(keyword, name),
     'media-bottom-margin': integer(0, MAX),
@@ -529,6 +557,7 @@ attributes['Job Template'] = {
     'media-pre-printed': _(keyword, name),
     'media-recycled': _(keyword, name),
     'media-right-margin': integer(0, MAX),
+    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
     'media-size': collection({
       'x-dimension': integer(0, MAX),
       'y-dimension': integer(0, MAX)
@@ -546,8 +575,10 @@ attributes['Job Template'] = {
   'number-up': integer(1, MAX),
   'orientation-requested': enumeration,
   'output-bin': _(keyword, name),
+  // @ts-expect-error ts-migrate(2349) FIXME: This expression is not callable.
   'output-device': name(127),
   overrides: setof(
+    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
     collection({
       // Any Job Template attribute (TODO)
       'document-copies': setof(rangeOfInteger),
@@ -559,6 +590,7 @@ attributes['Job Template'] = {
   'page-order-received': keyword,
   'page-ranges': setof(rangeOfInteger(1, MAX)),
   'pages-per-subset': setof(integer(1, MAX)),
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
   'pdl-init-file': collection({
     'pdl-init-file-entry': name,
     'pdl-init-file-location': uri,
@@ -570,11 +602,13 @@ attributes['Job Template'] = {
   'print-quality': enumeration,
   'print-rendering-intent': keyword,
   'printer-resolution': resolution,
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
   'proof-print': collection({
     media: _(keyword, name),
     'media-col': collection('Job Template', 'media-col'),
     'proof-print-copies': integer(0, MAX)
   }),
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
   'separator-sheets': collection({
     media: _(keyword, name),
     'media-col': collection('Job Template', 'media-col'),
@@ -591,6 +625,7 @@ attributes['Job Template'] = {
   'y-side1-image-shift': integer,
   'y-side2-image-shift': integer
 };
+// @ts-expect-error ts-migrate(2339) FIXME: Property 'Operation' does not exist on type '{}'.
 attributes.Operation = {
   'attributes-charset': charset,
   'attributes-natural-language': naturalLanguage,
@@ -603,6 +638,7 @@ attributes.Operation = {
   'document-format': mimeMediaType,
   'document-format-accepted': setof(mimeMediaType),
   'document-format-details': setof(
+    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
     collection({
       'document-format': mimeMediaType,
       'document-format-device-id': text(127),
@@ -610,6 +646,7 @@ attributes.Operation = {
       'document-natural-language': setof(naturalLanguage),
       'document-source-application-name': name,
       'document-source-application-version': text(127),
+      // @ts-expect-error ts-migrate(2349) FIXME: This expression is not callable.
       'document-source-os-name': name(40),
       'document-source-os-version': text(40)
     })
@@ -662,6 +699,7 @@ attributes.Operation = {
   'status-message': text(255),
   'which-jobs': keyword
 };
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 attributes['Printer Description'] = {
   'charset-configured': charset,
   'charset-supported': setof(charset),
@@ -761,6 +799,7 @@ attributes['Printer Description'] = {
   'job-recipient-name-default': _(name, novalue),
   'job-recipient-name-supported': boolean,
   'job-resolvers-supported': setof(
+    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
     collection({
       'resolver-name': name
     })
@@ -785,11 +824,13 @@ attributes['Printer Description'] = {
   'media-back-coating-supported': setof(_(keyword, name)),
   'media-bottom-margin-supported': setof(integer(0, MAX)),
   'media-col-database': setof(
+    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
     collection({
       /* eslint-disable no-warning-comments */
       // TODO: Member attributes are the same as the
       // "media-col" Job Template attribute
       /* eslint-enable no-warning-comments */
+      // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
       'media-source-properties': collection({
         'media-source-feed-direction': keyword,
         'media-source-feed-orientation': enumeration
@@ -798,11 +839,13 @@ attributes['Printer Description'] = {
   ),
   'media-col-default': collection('Job Template', 'media-col'),
   'media-col-ready': setof(
+    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
     collection({
       /* eslint-disable no-warning-comments */
       // TODO: Member attributes are the same as the
       // "media-col" Job Template attribute
       /* eslint-enable no-warning-comments */
+      // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
       'media-source-properties': collection({
         'media-source-feed-direction': keyword,
         'media-source-feed-orientation': enumeration
@@ -811,11 +854,13 @@ attributes['Printer Description'] = {
   ),
   'media-col-supported': setof(keyword),
   'media-color-supported': setof(_(keyword, name)),
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 3.
   'media-default': _(keyword, name, novalue),
   'media-front-coating-supported': setof(_(keyword, name)),
   'media-grain-supported': setof(_(keyword, name)),
   'media-hole-count-supported': setof(rangeOfInteger(0, MAX)),
   'media-info-supported': boolean,
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 3.
   'media-input-tray-check-default': _(keyword, name, novalue),
   'media-input-tray-check-supported': setof(_(keyword, name)),
   'media-key-supported': setof(_(keyword, name)),
@@ -826,6 +871,7 @@ attributes['Printer Description'] = {
   'media-recycled-supported': setof(_(keyword, name)),
   'media-right-margin-supported': setof(integer(0, MAX)),
   'media-size-supported': setof(
+    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
     collection({
       'x-dimension': _(integer(1, MAX), rangeOfInteger(1, MAX)),
       'y-dimension': _(integer(1, MAX), rangeOfInteger(1, MAX))
@@ -851,6 +897,7 @@ attributes['Printer Description'] = {
   'orientation-requested-supported': setof(enumeration),
   'output-bin-default': _(keyword, name),
   'output-bin-supported': setof(_(keyword, name)),
+  // @ts-expect-error ts-migrate(2349) FIXME: This expression is not callable.
   'output-device-supported': setof(name(127)),
   'overrides-supported': setof(keyword),
   'page-delivery-default': keyword,
@@ -887,11 +934,13 @@ attributes['Printer Description'] = {
   'printer-current-time': dateTime,
   'printer-detailed-status-messages': setof(text),
   'printer-device-id': text(1023),
+  // @ts-expect-error ts-migrate(2349) FIXME: This expression is not callable.
   'printer-dns-sd-name': name(127),
   'printer-driver-installer': uri,
   'printer-geo-location': uri,
   'printer-get-attributes-supported': setof(keyword),
   'printer-icc-profiles': setof(
+    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
     collection({
       'xri-authentication': name,
       'profile-url': uri
@@ -908,6 +957,7 @@ attributes['Printer Description'] = {
   'printer-message-time': integer,
   'printer-more-info': uri,
   'printer-more-info-manufacturer': uri,
+  // @ts-expect-error ts-migrate(2349) FIXME: This expression is not callable.
   'printer-name': name(127),
   'printer-organization': setof(text),
   'printer-organizational-unit': setof(text),
@@ -926,6 +976,7 @@ attributes['Printer Description'] = {
   'printer-uri-supported': setof(uri),
   'printer-uuid': uri(45),
   'printer-xri-supported': setof(
+    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
     collection({
       'xri-authentication': keyword,
       'xri-security': keyword,
@@ -982,6 +1033,7 @@ attributes['Printer Description'] = {
   'y-side2-image-shift-default': integer,
   'y-side2-image-shift-supported': rangeOfInteger
 };
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 attributes['Subscription Description'] = {
   'notify-events': setof(keyword),
   'notify-job-id': integer(1, MAX),
@@ -995,6 +1047,7 @@ attributes['Subscription Description'] = {
   'notify-subscription-id': integer(1, MAX),
   'subscription-uuid': uri
 };
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 attributes['Subscription Template'] = {
   'notify-attributes': setof(keyword),
   'notify-attributes-supported': setof(keyword),
@@ -1015,6 +1068,7 @@ attributes['Subscription Template'] = {
   'notify-user-data': octetString(63)
 };
 
+// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 attributes['SEAL Operation'] = {
   'seal-attributes': setof(text),
   'seal-attributes-v2': setof(text)
@@ -1022,4 +1076,5 @@ attributes['SEAL Operation'] = {
 
 resolve(attributes);
 
+// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'module'. Do you need to install ... Remove this comment to see the full error message
 module.exports = attributes;

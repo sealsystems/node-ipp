@@ -1,18 +1,24 @@
 'use strict';
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const assert = require('assertthat');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'parser'.
 const parser = require('../../lib/parser');
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'suite'. Do you need to install t... Remove this comment to see the full error message
 suite('parser', () => {
-  test('is a function', (done) => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
+  test('is a function', (done: any) => {
     assert.that(parser).is.ofType('function');
     done();
   });
 
-  test('throw error if ipp message is cut before group', (done) => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
+  test('throw error if ipp message is cut before group', (done: any) => {
     /* eslint-disable line-comment-position */
     /* eslint-disable no-inline-comments */
+    // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
     const data = Buffer.from(
       '0200' + // version 2.0
       '000B' + // Get-Printer-Attributes
@@ -30,9 +36,11 @@ suite('parser', () => {
     done();
   });
 
-  test('throw error if ipp message is cut before group attributes', (done) => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
+  test('throw error if ipp message is cut before group attributes', (done: any) => {
     /* eslint-disable line-comment-position */
     /* eslint-disable no-inline-comments */
+    // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
     const data = Buffer.from(
       '0200' + // version 2.0
       '000B' + // Get-Printer-Attributes
@@ -51,9 +59,11 @@ suite('parser', () => {
     done();
   });
 
-  test('throw error if ipp message is cut inside group attributes', (done) => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
+  test('throw error if ipp message is cut inside group attributes', (done: any) => {
     /* eslint-disable line-comment-position */
     /* eslint-disable no-inline-comments */
+    // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
     const baseData = Buffer.from(
       '0200' + // version 2.0
       '000B' + // Get-Printer-Attributes
@@ -61,6 +71,7 @@ suite('parser', () => {
         '01', // operation-attributes-tag
       'hex'
     );
+    // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
     const attributes = Buffer.from(
       '470012617474726962757465732d6368617273657400057574662d3848001b617474726962757465732d6e61747572616c2d6c616e67756167650002656e',
       'hex'
@@ -72,6 +83,7 @@ suite('parser', () => {
     for (let l = 1; l <= attributes.length; l++) {
       assert
         .that(() => {
+          // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
           const data = Buffer.concat([baseData, attributes.slice(0, l)]);
 
           parser(data);
@@ -82,9 +94,11 @@ suite('parser', () => {
     done();
   });
 
-  test('can parse Get-Printer-Attributes', (done) => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
+  test('can parse Get-Printer-Attributes', (done: any) => {
     /* eslint-disable line-comment-position */
     /* eslint-disable no-inline-comments */
+    // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
     const data = Buffer.from(
       '0200' + // version 2.0
       '000B' + // Get-Printer-Attributes
@@ -110,9 +124,11 @@ suite('parser', () => {
     done();
   });
 
-  test('can parse CUPS-Get-Printers', (done) => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
+  test('can parse CUPS-Get-Printers', (done: any) => {
     /* eslint-disable line-comment-position */
     /* eslint-disable no-inline-comments */
+    // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
     const data = Buffer.from(
       '0200' + // version 2.0
       '4002' + // CUPS-Get-Printers
