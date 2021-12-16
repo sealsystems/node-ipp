@@ -1,10 +1,7 @@
-'use strict';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'attributes... Remove this comment to see the full error message
-const attributes = require('./attributes');
+import attributes from './attributes';
 
 // the only possible values for the keyword
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'keyword'.
 const keyword = (arr: any) => {
   arr = arr.slice(0);
   arr.type = 'keyword';
@@ -558,34 +555,23 @@ const media = {
   ]
 };
 
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 const jobTemplateAttributeNames = Object.keys(attributes['Job Template']);
-// @ts-expect-error ts-migrate(2339) FIXME: Property 'Operation' does not exist on type '{}'.
 const jobTemplateAndOperationAttributeNames = jobTemplateAttributeNames.concat(Object.keys(attributes.Operation));
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 const printerAttributeNames = Object.keys(attributes['Job Template']).concat(['none']);
 const mediaNameOrSize = media['media name'].concat(media['size name']);
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'keywords'.
-const keywords = {};
+const keywords: {
+  [key: string]: number | string,
+} = {};
 
-// @ts-expect-error ts-migrate(2339) FIXME: Property 'compression' does not exist on type '{}'... Remove this comment to see the full error message
 keywords.compression = keyword(['compress', 'deflate', 'gzip', 'none']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['compression-supported'] = setofKeyword(keywords.compression);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['cover-back-supported'] = setofKeyword(['cover-type', 'media', 'media-col']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['cover-front-supported'] = setofKeyword(keywords['cover-back-supported']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['cover-type'] = keyword(['no-cover', 'print-back', 'print-both', 'print-front', 'print-none']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['document-digital-signature'] = keyword(['dss', 'none', 'pgp', 'smime', 'xmldsig']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['document-digital-signature-default'] = keyword(keywords['document-digital-signature']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['document-digital-signature-supported'] = setofKeyword(keywords['document-digital-signature']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['document-format-details-supported'] = setofKeyword([
   'document-format',
   'document-format-device-id',
@@ -596,12 +582,10 @@ keywords['document-format-details-supported'] = setofKeyword([
   'document-source-os-name',
   'document-source-os-version'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['document-format-varying-attributes'] = setofKeyword(
   // Any Printer attribute keyword name
   printerAttributeNames
 );
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['document-state-reasons'] = setofKeyword([
   'aborted-by-system',
   'canceled-at-device',
@@ -639,21 +623,13 @@ keywords['document-state-reasons'] = setofKeyword([
   'unsupported-document-format',
   'warnings-detected'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['feed-orientation'] = keyword(['long-edge-first', 'short-edge-first']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['feed-orientation-supported'] = setofKeyword(keywords['feed-orientation']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['finishings-col-supported'] = setofKeyword(['finishing-template', 'stitching']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['identify-actions'] = setofKeyword(['display', 'flash', 'sound', 'speak']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['identify-actions-default'] = setofKeyword(keywords['identify-actions']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['identify-actions-supported'] = setofKeyword(keywords['identify-actions']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['imposition-template'] = keywordName(['none', 'signature']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['ipp-features-supported'] = setofKeyword([
   'document-object',
   'ipp-everywhere',
@@ -663,33 +639,21 @@ keywords['ipp-features-supported'] = setofKeyword([
   'proof-print',
   'subscription-object'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['ipp-versions-supported'] = setofKeyword(['1.0', '1.1', '2.0', '2.1', '2.2']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-accounting-sheets-type'] = keywordName(['none', 'standard']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-cover-back-supported'] = setofKeyword(keywords['cover-back-supported']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-cover-front-supported'] = setofKeyword(keywords['cover-front-supported']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-creation-attributes-supported'] = setofKeyword(
   //  Any Job Template attribute
   //  Any job creation Operation attribute keyword name
   jobTemplateAndOperationAttributeNames
 );
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-error-action'] = keyword(['abort-job', 'cancel-job', 'continue-job', 'suspend-job']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-error-action-default'] = keyword(keywords['job-error-action']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-error-action-supported'] = setofKeyword(keywords['job-error-action']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-error-sheet-type'] = keywordName(['none', 'standard']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-error-sheet-when'] = keyword(['always', 'on-error']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-finishings-col-supported'] = setofKeyword(keywords['finishings-col-supported']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-hold-until'] = keywordName([
   'day-time',
   'evening',
@@ -700,27 +664,19 @@ keywords['job-hold-until'] = keywordName([
   'third-shift',
   'weekend'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-hold-until-default'] = keywordName(keywords['job-hold-until']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-hold-until-supported'] = setofKeywordName(keywords['job-hold-until']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-mandatory-attributes'] = setofKeyword(
   //  Any Job Template attribute
   jobTemplateAttributeNames
 );
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-password-encryption'] = keywordName(['md2', 'md4', 'md5', 'none', 'sha']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-password-encryption-supported'] = setofKeywordName(keywords['job-password-encryption']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-save-disposition-supported'] = setofKeyword(['save-disposition', 'save-info']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-settable-attributes-supported'] = setofKeyword(
   //  Any Job Template attribute
   jobTemplateAttributeNames
 );
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-sheets'] = keywordName([
   'first-print-stream-page',
   'job-both-sheet',
@@ -729,13 +685,9 @@ keywords['job-sheets'] = keywordName([
   'none',
   'standard'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-sheets-default'] = keywordName(keywords['job-sheets']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-sheets-supported'] = setofKeywordName(keywords['job-sheets']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-spooling-supported'] = keyword(['automatic', 'spool', 'stream']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-state-reasons'] = setofKeyword([
   'aborted-by-system',
   'compression-error',
@@ -796,7 +748,6 @@ keywords['job-state-reasons'] = setofKeyword([
   'warnings-detected'
 ]);
 
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['marker-types'] = keywordName([
   'toner',
   'waste-toner',
@@ -830,16 +781,17 @@ keywords['marker-types'] = keywordName([
   'covers'
 ]);
 
-// @ts-expect-error ts-migrate(2339) FIXME: Property 'media' does not exist on type '{}'.
 keywords.media = keywordName(
-  // @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
-  [].concat(media['size name'], media['media name'], media['media type'], media['input tray'], media['envelope name'])
+  [
+    ...media['size name'],
+    ...media['media name'],
+    ...media['media type'],
+    ...media['input tray'],
+    ...media['envelope name']
+  ]
 );
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-back-coating'] = keywordName(['glossy', 'high-gloss', 'matte', 'none', 'satin', 'semi-gloss']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-back-coating-supported'] = setofKeywordName(keywords['media-back-coating']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-col-supported'] = setofKeyword([
   'media-bottom-margin',
   'media-left-margin',
@@ -848,7 +800,6 @@ keywords['media-col-supported'] = setofKeyword([
   'media-source',
   'media-top-margin'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-color'] = keywordName([
   'blue',
   'buff',
@@ -863,48 +814,31 @@ keywords['media-color'] = keywordName([
   'white',
   'yellow'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-color-supported'] = setofKeywordName(keywords['media-color']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-default'] = keywordNameNovalue(keywords.media);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-front-coating'] = keywordName(keywords['media-back-coating']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-front-coating-supported'] = setofKeywordName(keywords['media-back-coating']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-grain'] = keywordName(['x-direction', 'y-direction']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-grain-supported'] = setofKeywordName(keywords['media-grain']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-input-tray-check'] = keywordName([media['input tray']]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-input-tray-check-default'] = keywordName([media['input tray']]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-input-tray-check-supported'] = setofKeywordName(media['input tray']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-key'] = keywordName(
   //  Any "media" media or size keyword value
   mediaNameOrSize
 );
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-key-supported'] = setofKeywordName([
   //  Any "media" media or size keyword value
   mediaNameOrSize
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-pre-printed'] = keywordName(['blank', 'letter-head', 'pre-printed']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-pre-printed-supported'] = keywordName(keywords['media-pre-printed']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-ready'] = setofKeywordName([
   //  Any "media" media or size keyword value
   mediaNameOrSize
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-recycled'] = keywordName(['none', 'standard']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-recycled-supported'] = keywordName(keywords['media-recycled']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-source'] = keywordName([
   'alternate',
   'alternate-roll',
@@ -957,13 +891,9 @@ keywords['media-source'] = keywordName([
   'tray-19',
   'tray-20'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-source-feed-direction'] = keyword(keywords['feed-orientation']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-source-supported'] = setofKeywordName(keywords['media-source']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-supported'] = setofKeywordName(keywords.media);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-tooth'] = keywordName([
   'antique',
   'calendared',
@@ -976,9 +906,7 @@ keywords['media-tooth'] = keywordName([
   'uncalendared',
   'vellum'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-tooth-supported'] = setofKeywordName(keywords['media-tooth']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-type'] = keywordName([
   'aluminum',
   'back-print-film',
@@ -1048,22 +976,16 @@ keywords['media-type'] = keywordName([
   'triple-wall',
   'wet-film'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['media-type-supported'] = setofKeywordName(keywords['media-type']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['multiple-document-handling'] = keyword([
   'separate-documents-collated-copies',
   'separate-documents-uncollated-copies',
   'single-document',
   'single-document-new-sheet'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['multiple-document-handling-default'] = keyword(keywords['multiple-document-handling']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['multiple-document-handling-supported'] = setofKeyword(keywords['multiple-document-handling']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['multiple-operation-timeout-action'] = keyword(['abort-job', 'hold-job', 'process-job']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['notify-events'] = setofKeyword([
   'job-completed',
   'job-config-changed',
@@ -1081,17 +1003,11 @@ keywords['notify-events'] = setofKeyword([
   'printer-state-changed',
   'printer-stopped'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['notify-events-default'] = setofKeyword(keywords['notify-events']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['notify-events-supported'] = setofKeyword(keywords['notify-events']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['notify-pull-method'] = keyword(['ippget']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['notify-pull-method-supported'] = setofKeyword(keywords['notify-pull-method']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['notify-subscribed-event'] = keyword(keywords['notify-events']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['output-bin'] = keywordName([
   'bottom',
   'center',
@@ -1136,13 +1052,9 @@ keywords['output-bin'] = keywordName([
   'tray-9',
   'tray-10'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['job-accounting-output-bin'] = keywordName(keywords['output-bin']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['output-bin-default'] = keywordName(keywords['output-bin']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['output-bin-supported'] = setofKeywordName(keywords['output-bin']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['page-delivery'] = keyword([
   'reverse-order-face-down',
   'reverse-order-face-up',
@@ -1150,27 +1062,18 @@ keywords['page-delivery'] = keyword([
   'same-order-face-up',
   'system-specified'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['page-delivery-default'] = keyword(keywords['page-delivery']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['page-delivery-supported'] = setofKeyword(keywords['page-delivery']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['page-order-received'] = keyword(['1-to-n-order', 'n-to-1-order']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['page-order-received-default'] = keyword(keywords['page-order-received']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['page-order-received-supported'] = setofKeyword(keywords['page-order-received']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['current-page-order'] = keyword(keywords['page-order-received']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['pdl-init-file-supported'] = setofKeyword([
   'pdl-init-file-entry',
   'pdl-init-file-location',
   'pdl-init-file-name'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['pdl-override-supported'] = keyword(['attempted', 'guaranteed', 'not-attempted']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['presentation-direction-number-up'] = keyword([
   'tobottom-toleft',
   'tobottom-toright',
@@ -1181,11 +1084,8 @@ keywords['presentation-direction-number-up'] = keyword([
   'totop-toleft',
   'totop-toright'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['presentation-direction-number-up-default'] = keyword(keywords['presentation-direction-number-up']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['presentation-direction-number-up-supported'] = setofKeyword(keywords['presentation-direction-number-up']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['print-color-mode'] = keyword([
   'auto',
   'bi-level',
@@ -1195,17 +1095,11 @@ keywords['print-color-mode'] = keyword([
   'process-bi-level',
   'process-monochrome'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['print-color-mode-default'] = keyword(keywords['print-color-mode']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['print-color-mode-supported'] = setofKeyword(keywords['print-color-mode']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['print-content-optimize'] = keyword(['auto', 'graphic', 'photo', 'text', 'text-and-graphic']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['print-content-optimize-default'] = keyword(keywords['print-content-optimize']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['print-content-optimize-supported'] = setofKeyword(keywords['print-content-optimize']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['print-rendering-intent'] = keyword([
   'absolute',
   'auto',
@@ -1214,29 +1108,23 @@ keywords['print-rendering-intent'] = keyword([
   'relative-bpc',
   'saturation'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['print-rendering-intent-default'] = keyword(keywords['print-rendering-intent']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['print-rendering-intent-supported'] = setofKeyword(keywords['print-rendering-intent']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['printer-get-attributes-supported'] = setofKeyword(
   //  Any Job Template attribute
   //  Any job creation Operation attribute keyword name
   jobTemplateAndOperationAttributeNames
 );
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['printer-mandatory-job-attributes'] = setofKeyword(
   //	Any Job Template attribute
   //	Any Operation attribute at the job level
   // this probably isn't quite right...
   jobTemplateAndOperationAttributeNames
 );
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['printer-settable-attributes-supported'] = setofKeyword(
   //  Any read-write Printer attribute keyword name
   printerAttributeNames
 );
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['printer-state-reasons'] = setofKeyword([
   'alert-removal-of-binary-change-entry',
   'bander-added',
@@ -1986,11 +1874,8 @@ keywords['printer-state-reasons'] = setofKeyword([
   'wrapper-unrecoverable-storage-error',
   'wrapper-warming-up'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['proof-print-supported'] = setofKeyword(['media', 'media-col', 'proof-print-copies']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['pwg-raster-document-sheet-back'] = keyword(['flipped', 'manual-tumble', 'normal', 'rotated']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['pwg-raster-document-type-supported'] = setofKeyword([
   'adobe-rgb_8',
   'adobe-rgb_16',
@@ -2037,7 +1922,6 @@ keywords['pwg-raster-document-type-supported'] = setofKeyword([
   'srgb_8',
   'srgb_16'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['requested-attributes'] = keyword([
   'all',
   'document-description',
@@ -2048,35 +1932,20 @@ keywords['requested-attributes'] = keyword([
   'subscription-description',
   'subscription-template'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['save-disposition'] = keyword(['none', 'print-save', 'save-only']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['save-disposition-supported'] = setofKeyword(keywords['save-disposition']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['save-info-supported'] = setofKeyword(['save-document-format', 'save-location', 'save-name']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['separator-sheets-type'] = keywordName(['both-sheets', 'end-sheet', 'none', 'slip-sheets', 'start-sheet']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['separator-sheets-type-supported'] = setofKeywordName(keywords['separator-sheets-type']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['sheet-collate'] = keyword(['collated', 'uncollated']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['sheet-collate-default'] = keyword(keywords['sheet-collate']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['sheet-collate-supported'] = setofKeyword(keywords['sheet-collate']);
-// @ts-expect-error ts-migrate(2339) FIXME: Property 'sides' does not exist on type '{}'.
 keywords.sides = keyword(['one-sided', 'two-sided-long-edge', 'two-sided-short-edge']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['sides-default'] = keyword(keywords.sides);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['sides-supported'] = setofKeyword(keywords.sides);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['stitching-reference-edge'] = keyword(['bottom', 'left', 'right', 'top']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['stitching-reference-edge-supported'] = setofKeyword(keywords['stitching-reference-edge']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['stitching-supported'] = setofKeyword(['stitching-locations', 'stitching-offset', 'stitching-reference-edge']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['uri-authentication-supported'] = setofKeyword([
   'basic',
   'certificate',
@@ -2085,9 +1954,7 @@ keywords['uri-authentication-supported'] = setofKeyword([
   'none',
   'requesting-user-name'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['uri-security-supported'] = setofKeyword(['none', 'ssl3', 'tls']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['which-jobs'] = keyword([
   'aborted',
   'all',
@@ -2101,15 +1968,10 @@ keywords['which-jobs'] = keyword([
   'proof-print',
   'saved'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['which-jobs-supported'] = setofKeyword(keywords['which-jobs']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['x-image-position'] = keyword(['center', 'left', 'none', 'right']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['x-image-position-default'] = keyword(keywords['x-image-position']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['x-image-position-supported'] = setofKeyword(keywords['x-image-position']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['xri-authentication-supported'] = setofKeyword([
   'basic',
   'certificate',
@@ -2117,14 +1979,9 @@ keywords['xri-authentication-supported'] = setofKeyword([
   'none',
   'requesting-user-name'
 ]);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['xri-security-supported'] = setofKeyword(['none', 'ssl3', 'tls']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['y-image-position'] = keyword(['bottom', 'center', 'none', 'top']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['y-image-position-default'] = keyword(keywords['y-image-position']);
-// @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
 keywords['y-image-position-supported'] = setofKeyword(keywords['y-image-position']);
 
-// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'module'. Do you need to install ... Remove this comment to see the full error message
-module.exports = keywords;
+export default keywords;

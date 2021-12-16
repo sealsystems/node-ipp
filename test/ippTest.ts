@@ -1,33 +1,24 @@
-'use strict';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const assert = require('assertthat');
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ipp'.
 const ipp = require('../ipp.js');
 
-// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'suite'. Do you need to install t... Remove this comment to see the full error message
 suite('ipp', () => {
-  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
-  test('is an object', (done: any) => {
+    test('is an object', (done: any) => {
     assert.that(ipp).is.ofType('object');
     done();
   });
 
-  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'suite'. Do you need to install t... Remove this comment to see the full error message
-  suite('ipp.parse()', () => {
-    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
-    test('is a function', (done: any) => {
+    suite('ipp.parse()', () => {
+        test('is a function', (done: any) => {
       assert.that(ipp.parse).is.ofType('function');
       done();
     });
 
-    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
-    test('can parse Get-Printer-Attributes', (done: any) => {
+        test('can parse Get-Printer-Attributes', (done: any) => {
       /* eslint-disable line-comment-position */
       /* eslint-disable no-inline-comments */
-      // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
-      const data = Buffer.from(
+            const data = Buffer.from(
         '0200' + // version 2.0
         '000B' + // Get-Printer-Attributes
         '00000001' + // reqid
@@ -53,10 +44,8 @@ suite('ipp', () => {
     });
   });
 
-  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'suite'. Do you need to install t... Remove this comment to see the full error message
-  suite('ipp.StreamParser', () => {
-    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'test'. Do you need to install ty... Remove this comment to see the full error message
-    test('is a function', (done: any) => {
+    suite('ipp.StreamParser', () => {
+        test('is a function', (done: any) => {
       assert.that(ipp.StreamParser).is.ofType('function');
       done();
     });

@@ -1,10 +1,7 @@
-'use strict';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ipp'.
-const ipp = require('./../ipp');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'printer'.
+import ipp from './../ipp';
+
 const printer = ipp.Printer('http://cp02.local.:631/ipp/printer');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'msg'.
 const msg = {
   'operation-attributes-tag': {
     'job-uri': 'ipp://CP01.local/ipp/printer/0186'

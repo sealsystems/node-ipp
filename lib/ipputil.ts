@@ -1,23 +1,53 @@
-'use strict';
+type Unpacked<T> = T extends (infer U)[] ? U : T;
+type Xref<T extends Array<string | null>> = Record<Unpacked<T>, number>
 
 //  To serialize and deserialize, we need to be able to look
 //  things up by key or by value. This little helper just
 //  converts the arrays to objects and tacks on a 'lookup' property.
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'xref'.
-const xref = (arr: any, offset = 0) => {
-  const obj = {};
+const xref = <T extends Record<string, number>>(arr: T, offset = 0): Xref<T> & { lookup: T } => {
+  const map: Map<Extract<T, string>, number> = arr.reduce((
+    acc: Map<Extract<T, string>, number>,
+    item,
+    index: number
+  ) => {
 
-  arr.forEach((item: any, index: any) => {
-    // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-    obj[item] = index + offset;
-  });
-  // @ts-expect-error ts-migrate(2339) FIXME: Property 'lookup' does not exist on type '{}'.
-  obj.lookup = arr;
+    if (!item) return acc;
 
-  return obj;
+    acc.set(item, index + offset)
+
+    return acc;
+  }, new Map());
+
+  const obj = Object.fromEntries(map)
+
+  return {
+    ...obj,
+    lookup: arr
+  };
 };
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'extend'.
+const lookup = <T extends Record<string, number>>(arr: T, offset = 0): T & { lookup: Array } => {
+  const map: Map<Extract<T, string>, number> = arr.reduce((
+    acc: Map<Extract<T, string>, number>,
+    item,
+    index: number
+  ) => {
+
+    if (!item) return acc;
+
+    acc.set(item, index + offset)
+
+    return acc;
+  }, new Map());
+
+  const obj = Object.fromEntries(map)
+
+  return {
+    ...obj,
+    lookup: arr
+  };
+};
+
 const extend = (destination: any, source: any) => {
   for (const property in source) {
     if (source[property] && source[property].constructor === Object) {
@@ -31,7 +61,4 @@ const extend = (destination: any, source: any) => {
   return destination;
 };
 
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.extend = extend;
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.xref = xref;
+export { extend, xref };

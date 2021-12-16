@@ -1,10 +1,7 @@
-'use strict';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'tags'.
-const tags = require('./tags');
+import tags from './tags';
 
 const message = (host: any, operation: any, id: any) => {
-  // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
   const buf = Buffer.alloc(1024);
   let position = 0;
 
@@ -21,7 +18,6 @@ const message = (host: any, operation: any, id: any) => {
     position += 4;
   };
   const write = (str: any) => {
-    // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'Buffer'. Do you need to install ... Remove this comment to see the full error message
     const length = Buffer.byteLength(str);
 
     write2(length);
@@ -73,5 +69,4 @@ const message = (host: any, operation: any, id: any) => {
   return buf.slice(0, position);
 };
 
-// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'module'. Do you need to install ... Remove this comment to see the full error message
-module.exports = message;
+export default message;

@@ -1,25 +1,24 @@
-'use strict';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'moment'.
-const moment = require('moment');
+import moment from 'moment';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'enums'.
-const enums = require('./enums');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'statusCode... Remove this comment to see the full error message
-const statusCodes = require('./statusCodes');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'tags'.
-const tags = require('./tags');
+import enums from './enums';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'operations... Remove this comment to see the full error message
+import statusCodes from './statusCodes';
+
+import tags from './tags';
+
 const operations = enums['operations-supported'];
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'cupsOperat... Remove this comment to see the full error message
 const cupsOperations = enums['cups-operations-supported'];
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'RS'.
 const RS = '\u001e';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'parser'.
-const parser = (buf: any) => {
-  const obj = {};
+type IppDecoded = {
+  version: number
+  data: any
+
+}
+
+const parser = (buf: Buffer): IppDecoded => {
+  let obj: object = {};
   let position = 0;
   const encoding = 'utf8';
 
@@ -41,7 +40,7 @@ const parser = (buf: any) => {
     if (position + 2 > buf.length) {
       throw new Error('NotEnoughData');
     }
-    const val = buf.readInt16BE(position, true);
+    const val = buf.readInt16BE(position);
 
     if (!inPlace) {
       position += 2;
@@ -54,7 +53,7 @@ const parser = (buf: any) => {
     if (position + 4 > buf.length) {
       throw new Error('NotEnoughData');
     }
-    const val = buf.readInt32BE(position, true);
+    const val = buf.readInt32BE(position);
 
     if (!inPlace) {
       position += 4;
@@ -63,7 +62,7 @@ const parser = (buf: any) => {
     return val;
   };
 
-  const read = (length: any, enc: any, inPlace = false) => {
+  const read = (length: number, enc: BufferEncoding = encoding, inPlace = false) => {
     if (length === 0) {
       return '';
     }
@@ -76,10 +75,10 @@ const parser = (buf: any) => {
       position += length;
     }
 
-    return buf.toString(enc || encoding, start, position);
+    return buf.toString(enc, start, position);
   };
 
-  const readValue = (tag: any, name: any) => {
+  const readValue = (tag: any, name?: string): string | boolean | number | Date | Array<any> => {
     const length = read2();
     let lang, subval, val;
 
@@ -88,8 +87,8 @@ const parser = (buf: any) => {
       case tags.enum:
         val = read4();
 
-        // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-        return (enums[name] && enums[name].lookup[val]) || val;
+        // @ts-ignore
+        return (name && enums[name][val]) || val;
       case tags.integer:
         return read4();
 
@@ -111,7 +110,7 @@ const parser = (buf: any) => {
         const minutes = read1();
         const seconds = read1();
         const millis = read1();
-        // @ts-expect-error ts-migrate(2554) FIXME: Expected 2-3 arguments, but got 1.
+        // @ts-ignore
         const sign = String.fromCharCode(read(1));
         const timezone = read1() * 60 + read1();
 
@@ -135,17 +134,13 @@ const parser = (buf: any) => {
           // Some printers (e.g. HP OfficeJet Pro 8710) give a length for the
           // group of language + value. In these cases we have to read the
           // length.
-          // @ts-expect-error ts-migrate(2554) FIXME: Expected 2-3 arguments, but got 1.
           lang = read(read2());
-          // @ts-expect-error ts-migrate(2554) FIXME: Expected 2-3 arguments, but got 1.
           subval = read(read2());
         } else {
           // Some printers (e.g. HP LaserJet CP1525nw color) start directly with
           // the language without giving the length for both. Thus we have to
           // use the current length.
-          // @ts-expect-error ts-migrate(2554) FIXME: Expected 2-3 arguments, but got 1.
           lang = read(length);
-          // @ts-expect-error ts-migrate(2554) FIXME: Expected 2-3 arguments, but got 1.
           subval = read(read2());
         }
 
@@ -155,7 +150,6 @@ const parser = (buf: any) => {
       case tags.textWithoutLanguage:
       case tags.octetString:
       case tags.memberAttrName:
-        // @ts-expect-error ts-migrate(2554) FIXME: Expected 2-3 arguments, but got 1.
         return read(length);
 
       case tags.keyword:
@@ -168,7 +162,6 @@ const parser = (buf: any) => {
 
       case tags.begCollection:
         // the spec says a value could be present- but can be ignored
-        // @ts-expect-error ts-migrate(2554) FIXME: Expected 2-3 arguments, but got 1.
         read(length);
 
         /* eslint-disable no-use-before-define */
@@ -177,7 +170,6 @@ const parser = (buf: any) => {
 
       case tags.unknown:
       case tags['no-value']:
-        // @ts-expect-error ts-migrate(2554) FIXME: Expected 2-3 arguments, but got 1.
         return read(0);
 
       default:
@@ -199,7 +191,7 @@ const parser = (buf: any) => {
     );
   };
 
-  const readValues = (type: any, name: any) => {
+  const readValues = (type: any, name?: string) => {
     let value = readValue(type, name);
 
     if (hasAdditionalValue()) {
@@ -227,27 +219,21 @@ const parser = (buf: any) => {
       // tags.extension
       tag = read4();
     }
-    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2-3 arguments, but got 1.
     const name = read(read2());
 
     group[name] = readValues(tag, name);
   };
 
   const readGroup = (group: any) => {
-    const name = tags.lookup[group];
+    const name = tags[group];
 
     group = {};
-    // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (obj[name]) {
-      // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       if (!Array.isArray(obj[name])) {
-        // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         obj[name] = [obj[name]];
       }
-      // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       obj[name].push(group);
     } else {
-      // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       obj[name] = group;
     }
 
@@ -274,7 +260,7 @@ const parser = (buf: any) => {
     }
   };
 
-  const readCollectionItemValue = (name: any) => {
+  const readCollectionItemValue = (name?: string) => {
     let tag = read1();
 
     /* eslint-disable no-warning-comments */
@@ -287,7 +273,6 @@ const parser = (buf: any) => {
     }
 
     // read valuetag name and discard it
-    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2-3 arguments, but got 1.
     read(read2());
 
     return readValues(tag, name);
@@ -306,29 +291,22 @@ const parser = (buf: any) => {
       }
 
       // read nametag name and discard it
-      // @ts-expect-error ts-migrate(2554) FIXME: Expected 2-3 arguments, but got 1.
       read(read2());
-      // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
       const name = readValue(0x4a);
-      // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
       const values = readCollectionItemValue();
 
-      // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       collection[name] = values;
     }
 
     // Read endCollection name & value and discard it.
     // The spec says that they MAY have contents in the
     // future- so we can't assume they are empty.
-    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2-3 arguments, but got 1.
     read(read2());
-    // @ts-expect-error ts-migrate(2554) FIXME: Expected 2-3 arguments, but got 1.
     read(read2());
 
     return collection;
   };
 
-  // @ts-expect-error ts-migrate(2339) FIXME: Property 'version' does not exist on type '{}'.
   obj.version = `${read1()}.${read1()}`;
   const bytes2and3 = read2();
 
@@ -339,25 +317,20 @@ const parser = (buf: any) => {
   // the consumer can ignore (or delete) whichever they don't want.
 
   if ((bytes2and3 >= 0x02 && bytes2and3 < 0x400) || bytes2and3 >= 0x4000) {
-    // @ts-expect-error ts-migrate(2339) FIXME: Property 'operation' does not exist on type '{}'.
     obj.operation = operations.lookup[bytes2and3] || cupsOperations.lookup[bytes2and3 - 0x4000];
   }
 
   if (bytes2and3 <= 0x0007 || bytes2and3 >= 0x0400) {
-    // @ts-expect-error ts-migrate(2339) FIXME: Property 'statusCode' does not exist on type '{}'.
     obj.statusCode = statusCodes.lookup[bytes2and3];
   }
-  // @ts-expect-error ts-migrate(2339) FIXME: Property 'id' does not exist on type '{}'.
   obj.id = read4();
   readGroups();
 
   if (position < buf.length) {
-    // @ts-expect-error ts-migrate(2339) FIXME: Property 'data' does not exist on type '{}'.
     obj.data = buf.slice(position);
   }
 
   return obj;
 };
 
-// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'module'. Do you need to install ... Remove this comment to see the full error message
-module.exports = parser;
+export default parser;

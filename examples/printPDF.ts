@@ -1,13 +1,10 @@
-'use strict';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ipp'.
-const ipp = require('./../ipp');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'PDFDocumen... Remove this comment to see the full error message
-const PDFDocument = require('pdfkit');
-// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
-const concat = require('concat-stream');
+import ipp from './../ipp';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'doc'.
+import PDFDocument from 'pdfkit';
+
+import concat from 'concat-stream';
+
 const doc = new PDFDocument({ margin: 0 });
 doc.text('.', 0, 0);
 
