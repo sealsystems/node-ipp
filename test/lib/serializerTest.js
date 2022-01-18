@@ -120,4 +120,21 @@ suite('serializer', () => {
     assert.that(parsed['operation-attributes-tag']['seal-attributes']).is.equalTo(['a=b', 'a2=b2']);
     assert.that(parsed['operation-attributes-tag']['seal-attributes-v2']).is.equalTo('a3=b3');
   });
+
+  test('adds attribute of type "rangeOfInteger"', async () => {
+    msg['job-attributes-tag'] = {
+      'page-ranges': [
+        [1, 9],
+        [42, 99]
+      ]
+    };
+    const data = serializer(msg);
+
+    const parsed = parser(data);
+
+    assert.that(parsed['job-attributes-tag']['page-ranges']).is.equalTo([
+      [1, 9],
+      [42, 99]
+    ]);
+  });
 });
