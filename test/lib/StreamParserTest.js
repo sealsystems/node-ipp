@@ -15,8 +15,8 @@ suite('StreamParser', () => {
     /* eslint-disable no-inline-comments */
     const data = Buffer.from(
       '0200' + // version 2.0
-      '000B' + // Get-Printer-Attributes
-      '00000001' + // reqid
+        '000B' + // Get-Printer-Attributes
+        '00000001' + // reqid
         '01', // operation-attributes-tag
       'hex'
     );
@@ -78,9 +78,9 @@ suite('StreamParser', () => {
     /* eslint-disable no-inline-comments */
     const data = Buffer.from(
       '0200' + // version 2.0
-      '000B' + // Get-Printer-Attributes
-      '00000001' + // reqid
-      '01' + // operation-attributes-tag
+        '000B' + // Get-Printer-Attributes
+        '00000001' + // reqid
+        '01' + // operation-attributes-tag
         // unknown attribute
         '1200147072696e7465722d67656f2d6c6f636174696f6e0000',
       'hex'
@@ -114,12 +114,12 @@ suite('StreamParser', () => {
     /* eslint-disable no-inline-comments */
     const data = Buffer.from(
       '0200' + // version 2.0
-      '000B' + // Get-Printer-Attributes
-      '00000001' + // reqid
-      '01' + // operation-attributes-tag
-      // blah blah the required bloat of this protocol
-      '470012617474726962757465732d6368617273657400057574662d3848001b617474726962757465732d6e61747572616c2d6c616e67756167650002656e' +
-      '03' + // end-of-attributes-tag
+        '000B' + // Get-Printer-Attributes
+        '00000001' + // reqid
+        '01' + // operation-attributes-tag
+        // blah blah the required bloat of this protocol
+        '470012617474726962757465732d6368617273657400057574662d3848001b617474726962757465732d6e61747572616c2d6c616e67756167650002656e' +
+        '03' + // end-of-attributes-tag
         '54657374',
       'hex'
     );
@@ -162,9 +162,9 @@ suite('StreamParser', () => {
     /* eslint-disable no-inline-comments */
     const data = Buffer.from(
       '0200' + // version 2.0
-      '000B' + // Get-Printer-Attributes
-      '00000001' + // reqid
-      '01' + // operation-attributes-tag
+        '000B' + // Get-Printer-Attributes
+        '00000001' + // reqid
+        '01' + // operation-attributes-tag
         // blah blah the required bloat of this protocol
         '470012617474726962757465732d6368617273657400057574662d3848001b617474726962757465732d6e61747572616c2d6c616e67756167650002656e' +
         '03', // end-of-attributes-tag
