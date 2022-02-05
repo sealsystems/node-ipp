@@ -35,8 +35,8 @@
     }
   ],
   "devDependencies": {
-    "@sealsystems/eslint-config-es": "3.7.5",
-    "@sealsystems/mocha": "4.2.2",
+    "@sealsystems/eslint-config-es": "3.7.6",
+    "@sealsystems/mocha": "4.2.3",
     "concat-stream": "2.0.0",
     "express": "4.17.1",
     "freeport": "1.0.5",

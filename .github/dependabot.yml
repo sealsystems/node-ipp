@@ -25,6 +25,8 @@ updates:
       - dependency-name: "@sealsystems/semantic-release"
         versions:
           - ">= 0"
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     commit-message:
       prefix: chore
       prefix-development: no-release
