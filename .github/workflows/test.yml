@@ -12,17 +12,7 @@ env:
   TLS_UNPROTECTED: world
 
 jobs:
-  Cancel-Old-Runs:
-    runs-on: ubuntu-18.04
-
-    steps:
-    - uses: rokroskar/workflow-run-cleanup-action@v0.3.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
-
   Test-Linux:
-    needs:
-      - Cancel-Old-Runs
     runs-on: ubuntu-18.04
 
     services:
@@ -41,10 +31,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Use Node.js 14.16.0
+    - name: Use Node.js 16.13.1
       uses: actions/setup-node@v1
       with:
-        node-version: 14.16.0
+        node-version: 16.13.1
         registry-url: https://npm.pkg.github.com/
         scope: "@sealsystems"
 
@@ -55,7 +45,7 @@ jobs:
       with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
         path: ~/.npm
-        key: ${{ runner.os }}-${{ env.cache-name }}-14.16.0-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-${{ env.cache-name }}-16.13.1-${{ hashFiles('**/package-lock.json') }}
 
     - name: Install dependencies
       run: npm ci
@@ -70,17 +60,15 @@ jobs:
         NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
 
   # Test-Windows:
-  #   needs:
-  #     - Cancel-Old-Runs
   #   runs-on: windows-2019
 
   #   steps:
   #   - uses: actions/checkout@v2
 
-  #   - name: Use Node.js 14.16.0
+  #   - name: Use Node.js 16.13.1
   #     uses: actions/setup-node@v1
   #     with:
-  #       node-version: 14.16.0
+  #       node-version: 16.13.1
   #       registry-url: https://npm.pkg.github.com/
   #       scope: "@sealsystems"
 

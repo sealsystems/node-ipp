@@ -35,9 +35,8 @@
     }
   ],
   "devDependencies": {
-    "@sealsystems/eslint-config-es": "3.6.7",
-    "@sealsystems/mocha": "4.1.10",
-    "@sealsystems/semantic-release": "4.3.4",
+    "@sealsystems/eslint-config-es": "3.7.5",
+    "@sealsystems/mocha": "4.2.2",
     "concat-stream": "2.0.0",
     "express": "4.17.1",
     "freeport": "1.0.5",
@@ -57,8 +56,7 @@
     "extends": "@sealsystems/semantic-release/node-module"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "dependencies": {
     "moment": "2.29.1"

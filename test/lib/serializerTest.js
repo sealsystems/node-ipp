@@ -7,7 +7,7 @@ const assert = require('assertthat');
 const serializer = require('../../lib/serializer');
 const parser = require('../../lib/parser');
 
-const assertBufferEqual = function(buf1, buf2) {
+const assertBufferEqual = function (buf1, buf2) {
   assert.that(buf1.length).is.equalTo(buf2.length);
   for (let i = 0; i < buf1.length; i++) {
     assert.that(buf1[i]).is.equalTo(buf2[i]);
@@ -28,38 +28,8 @@ suite('serializer', () => {
       }
     };
     result = Buffer.from([
-      2,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      42,
-      1,
-      66,
-      0,
-      8,
-      106,
-      111,
-      98,
-      45,
-      110,
-      97,
-      109,
-      101,
-      0,
-      9,
-      72,
-      117,
-      103,
-      111,
-      115,
-      32,
-      74,
-      111,
-      98,
-      3
+      2, 0, 0, 0, 0, 0, 0, 42, 1, 66, 0, 8, 106, 111, 98, 45, 110, 97, 109, 101, 0, 9, 72, 117, 103, 111, 115, 32, 74,
+      111, 98, 3
     ]);
     done();
   });

@@ -15,7 +15,7 @@ suite('parser', () => {
     /* eslint-disable no-inline-comments */
     const data = Buffer.from(
       '0200' + // version 2.0
-      '000B' + // Get-Printer-Attributes
+        '000B' + // Get-Printer-Attributes
         '00000001', // reqid
       'hex'
     );
@@ -35,8 +35,8 @@ suite('parser', () => {
     /* eslint-disable no-inline-comments */
     const data = Buffer.from(
       '0200' + // version 2.0
-      '000B' + // Get-Printer-Attributes
-      '00000001' + // reqid
+        '000B' + // Get-Printer-Attributes
+        '00000001' + // reqid
         '01', // operation-attributes-tag
       'hex'
     );
@@ -56,8 +56,8 @@ suite('parser', () => {
     /* eslint-disable no-inline-comments */
     const baseData = Buffer.from(
       '0200' + // version 2.0
-      '000B' + // Get-Printer-Attributes
-      '00000001' + // reqid
+        '000B' + // Get-Printer-Attributes
+        '00000001' + // reqid
         '01', // operation-attributes-tag
       'hex'
     );
@@ -87,9 +87,9 @@ suite('parser', () => {
     /* eslint-disable no-inline-comments */
     const data = Buffer.from(
       '0200' + // version 2.0
-      '000B' + // Get-Printer-Attributes
-      '00000001' + // reqid
-      '01' + // operation-attributes-tag
+        '000B' + // Get-Printer-Attributes
+        '00000001' + // reqid
+        '01' + // operation-attributes-tag
         // blah blah the required bloat of this protocol
         '470012617474726962757465732d6368617273657400057574662d3848001b617474726962757465732d6e61747572616c2d6c616e67756167650002656e' +
         '03', // end-of-attributes-tag
@@ -115,9 +115,9 @@ suite('parser', () => {
     /* eslint-disable no-inline-comments */
     const data = Buffer.from(
       '0200' + // version 2.0
-      '4002' + // CUPS-Get-Printers
-      '00000001' + // reqid
-      '01' + // operation-attributes-tag
+        '4002' + // CUPS-Get-Printers
+        '00000001' + // reqid
+        '01' + // operation-attributes-tag
         // blah blah the required bloat of this protocol
         '470012617474726962757465732d6368617273657400057574662d3848001b617474726962757465732d6e61747572616c2d6c616e67756167650002656e' +
         '03', // end-of-attributes-tag
