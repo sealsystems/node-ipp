@@ -1,3 +1,10 @@
+## 2.7.8 (2022-03-24)
+
+### Chores
+
+
+added attrribute print-scaling ([5fa3ca0](https://github.com/sealsystems/node-ipp/commit/5fa3ca0))
+
 ## 2.7.7 (2021-08-25)
 
 ### Chores
