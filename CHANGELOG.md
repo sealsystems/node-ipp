@@ -1,3 +1,10 @@
+## 2.7.9 (2022-07-27)
+
+### Chores
+
+
+Trigger release ([4122df0](https://github.com/sealsystems/node-ipp/commit/4122df0))
+
 ## 2.7.8 (2022-03-24)
 
 ### Chores
