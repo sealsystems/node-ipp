@@ -17,7 +17,7 @@ jobs:
       !startsWith(github.event.head_commit.message, 'Release') &&
       github.event.head_commit.message != 'Update build configuration'
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
 
     services:
       mongo:
@@ -176,7 +176,7 @@ jobs:
       - Test-Linux
       - Test-Windows
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
 
     env:
       GIT_AUTHOR_EMAIL: com.git@sealsystems.de
