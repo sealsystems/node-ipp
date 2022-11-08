@@ -29,7 +29,7 @@ jobs:
         - 8500:8500
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Use Node.js 16.17.0
       uses: actions/setup-node@v1
@@ -63,7 +63,7 @@ jobs:
   #   runs-on: windows-2019
 
   #   steps:
-  #   - uses: actions/checkout@v2
+  #   - uses: actions/checkout@v3
 
   #   - name: Use Node.js 16.17.0
   #     uses: actions/setup-node@v1
