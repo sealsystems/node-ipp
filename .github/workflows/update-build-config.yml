@@ -16,6 +16,9 @@ jobs:
         with:
           token: ${{ secrets.CI_TOKEN }}
 
+      - name: Store name of base branch
+        run: echo "BASE_BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+
       - name: Prepare branch nightly/update-build-configuration
         run: |
           git fetch --quiet
@@ -98,7 +101,7 @@ jobs:
           fi
 
           gh pr create \
-          --base "master" \
+          --base "${BASE_BRANCH}" \
           --title "Update build configuration" \
           --body "The build configuration of this project is outdated and may no longer work.
           This pull request will be merged automatically if there are no conflicts." \
