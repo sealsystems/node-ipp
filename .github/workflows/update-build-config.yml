@@ -26,14 +26,14 @@ jobs:
           git reset --hard ${GITHUB_REF#refs/heads/}
 
       - name: Use Node.js 16.17.0
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 16.17.0
           registry-url: https://npm.pkg.github.com/
           scope: "@sealsystems"
 
       - name: Cache Node.js modules
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
