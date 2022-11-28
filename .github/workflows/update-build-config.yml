@@ -42,7 +42,7 @@ jobs:
           key: ${{ runner.os }}-${{ env.cache-name }}-16.18.1-${{ hashFiles('**/package-lock.json') }}
 
       - name: Set legacy-peer-deps
-        if: ${{ '@sealsystems/seal-node:service' == '@sealsystems/seal-node:ui-service' }}
+        if: ${{ '@sealsystems/seal-node:oss-module' == '@sealsystems/seal-node:ui-service' }}
         run: |
           npm config set legacy-peer-deps true
         env:
@@ -62,7 +62,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
 
       - name: Update build config
-        run: npx yo @sealsystems/seal-node:service --force
+        run: npx yo @sealsystems/seal-node:oss-module --force
         env:
           # Use personal access token, must be set for *each step*
           NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
