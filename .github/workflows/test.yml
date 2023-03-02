@@ -24,17 +24,17 @@ jobs:
         ports:
         - 27017:27017
       consul:
-        image: consul:1.7.4
+        image: consul:1.15.0
         ports:
         - 8500:8500
 
     steps:
     - uses: actions/checkout@v3
 
-    - name: Use Node.js 16.19.0
+    - name: Use Node.js 16.19.1
       uses: actions/setup-node@v3
       with:
-        node-version: 16.19.0
+        node-version: 16.19.1
         registry-url: https://npm.pkg.github.com/
         scope: "@sealsystems"
 
@@ -45,7 +45,7 @@ jobs:
       with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
         path: ~/.npm
-        key: ${{ runner.os }}-${{ env.cache-name }}-16.19.0-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-${{ env.cache-name }}-16.19.1-${{ hashFiles('**/package-lock.json') }}
 
     - name: Install dependencies
       run: npm ci
@@ -65,10 +65,10 @@ jobs:
   #   steps:
   #   - uses: actions/checkout@v3
 
-  #   - name: Use Node.js 16.19.0
+  #   - name: Use Node.js 16.19.1
   #     uses: actions/setup-node@v3
   #     with:
-  #       node-version: 16.19.0
+  #       node-version: 16.19.1
   #       registry-url: https://npm.pkg.github.com/
   #       scope: "@sealsystems"
 
@@ -105,19 +105,19 @@ jobs:
   #       Write-Host "Initiate MonogDB replicaSet..."
   #       C:\mongodb\bin\mongo.exe --eval 'rs.initiate()'
 
-  #   - name: Install Consul 1.7.4
+  #   - name: Install Consul 1.15.0
   #     run: |
   #       Write-Host "Creating necessary folders in C:\consul ..."
   #       mkdir c:\consul\data | Out-Null
 
-  #       Write-Host "Downloading https://releases.hashicorp.com/consul/1.7.4/consul_1.7.4_windows_amd64.zip ..."
+  #       Write-Host "Downloading https://releases.hashicorp.com/consul/1.15.0/consul_1.15.0_windows_amd64.zip ..."
   #       (New-Object Net.WebClient).DownloadFile(
-  #         "https://releases.hashicorp.com/consul/1.7.4/consul_1.7.4_windows_amd64.zip",
-  #         "C:\consul\consul_1.7.4_windows_amd64.zip"
+  #         "https://releases.hashicorp.com/consul/1.15.0/consul_1.15.0_windows_amd64.zip",
+  #         "C:\consul\consul_1.15.0_windows_amd64.zip"
   #       )
 
   #       Write-Host "Extracting zip archive to C:\consul ..."
-  #       Expand-Archive "C:\consul\consul_1.7.4_windows_amd64.zip" -DestinationPath "C:\consul"
+  #       Expand-Archive "C:\consul\consul_1.15.0_windows_amd64.zip" -DestinationPath "C:\consul"
 
   #       Write-Host "Writing Consul configuration..."
   #       @{
