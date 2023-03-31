@@ -1,3 +1,10 @@
+## 2.8.0 (2023-03-31)
+
+### Features
+
+
+Added http(s) agent as option ([53f1150](https://github.com/sealsystems/node-ipp/commit/53f1150))
+
 ## 2.7.10 (2022-12-08)
 
 ### Chores
