@@ -4,6 +4,7 @@ const assert = require('assertthat');
 const proxyquire = require('proxyquire');
 
 let lastWriteableStream;
+let lastUrl;
 let requestError;
 const printer = proxyquire('../../lib/printer', {
   './request'(url, buf, writeableStream, cb) {
@@ -11,6 +12,7 @@ const printer = proxyquire('../../lib/printer', {
       cb = writeableStream;
       writeableStream = null;
     }
+    lastUrl = url;
     lastWriteableStream = writeableStream;
     cb(requestError);
   }
@@ -18,6 +20,8 @@ const printer = proxyquire('../../lib/printer', {
 
 suite('printer', () => {
   setup(async () => {
+    lastWriteableStream = null;
+    lastUrl = null;
     requestError = null;
   });
 
@@ -37,6 +41,32 @@ suite('printer', () => {
     const ippPrinter = printer(url);
 
     assert.that(ippPrinter.uri).is.equalTo('hugo://localhost:6631/ipp/print/foo');
+  });
+
+  test('agent is set in parsed url', async () => {
+    const url = 'hugo://localhost:6631/ipp/print/foo';
+    const ippPrinter = printer(url, { agent: 'hansi' });
+
+    assert.that(ippPrinter.url.agent).is.equalTo('hansi');
+  });
+
+  test('agent is set in printer.execute options', (done) => {
+    const uri = 'ipp://localhost:6631/ipp/print/foo';
+    const ippPrinter = printer(uri, { agent: 'hansi' });
+
+    const msg = {
+      'operation-attributes-tag': {
+        'requesting-user-name': 'William',
+        'job-name': 'My Test Job',
+        'document-format': 'application/pdf'
+      },
+      data: Buffer.from('huhu')
+    };
+    ippPrinter.execute('op', msg, (err) => {
+      assert.that(err).is.null();
+      assert.that(lastUrl.agent).is.equalTo('hansi');
+      done();
+    });
   });
 
   test('uses protocol from options.uri', async () => {

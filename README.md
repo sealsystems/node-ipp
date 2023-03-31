@@ -2,7 +2,7 @@
 
 [![NPM](https://img.shields.io/npm/v/@sealsystems/ipp.svg)](https://www.npmjs.com/package/@sealsystems/ipp)
 
-A pure Javascript implementation of the IPP/2.0 protocol that has no dependencies.
+A pure Javascript implementation of the IPP/2.0 protocol.
 
 The IPP protocol was started in the 90's and is still being worked on today. It is a very indepth protocol that spans many
 RFCs- some of which are dead while others were herded into IPP/v2.x.
@@ -20,13 +20,15 @@ I have a pretty good starting point here. I created reference files
 (`attributes`, `enums`, `keywords`, `operations`, `statusCodes`, `versions` and `tags`) and tried to include as many
 links in the comments to the ref docs as I could.
 
-### Install
+## Install
 
 ```bash
 $ npm install @sealsystems/ipp
 ```
 
-## Printer(url [,options])
+## Usage
+
+### Printer(url [,options])
 
 ```javascript
 const ipp = require('@sealsystems/ipp');
@@ -64,6 +66,7 @@ To interact with a printer, create a `Printer` object.
 * `language` - Specifies the value for the 'attributes-natural-language' attribute of requests. Defaults to `en-us`.
 * `uri` - Specifies the value for the 'printer-uri' attribute of requests. Defaults to `ipp://+url.host+url.path`.
 * `version` - Specifies the value for the 'version' attribute of requests. Defaults to `2.0`.
+* `agent` - Specifies the value for the 'http(s)' agent. Defaults to `undefined`.
 
 ### printer.execute(operation, message, callback)
 
@@ -75,7 +78,7 @@ Executes an IPP operation on the Printer object.
   * If response should be streamed instead of buffered and parsed (e.g. for response size reason) add a writeable stream as `output` property to message.
 * 'callback(err, response)' - A function to callback with the Printer's response. Response is always `null` in case of an output stream.
 
-## ipp.parse(buffer)
+### ipp.parse(buffer)
 
 Parses a binary IPP message into a javascript object tree.
 
@@ -96,17 +99,17 @@ const result = ipp.parse(data);
 console.log(JSON.stringify(result, null, 2));
 //  ta-da!
 //{
-//	"version": "2.0",
-//	"operation": 11,
-//	"id": 1,
-//	"operation-attributes-tag": {
-//		"attributes-charset": "utf-8",
-//		"attributes-natural-language": "en"
-//	}
+//  "version": "2.0",
+//  "operation": 11,
+//  "id": 1,
+//  "operation-attributes-tag": {
+//    "attributes-charset": "utf-8",
+//    "attributes-natural-language": "en"
+// }
 //}
 ```
 
-## ipp.serialize(msg)
+### ipp.serialize(msg)
 
 Converts an IPP message object to IPP binary.
 
@@ -114,7 +117,7 @@ See [request](#request) for example.
 
 <a id="request"></a>
 
-## ipp.request(url, data, [writeableStream,] callback)
+### ipp.request(url, data, [writeableStream,] callback)
 
 Makes an IPP request to a url.
 
@@ -168,7 +171,7 @@ ipp.request(uri, data, myWriteStream, function(err) {
 });
 ```
 
-## Basic Auth
+### Basic Auth
 
 If you have to connect to an IPP printer or server that requires Basic Authentication you can add `auth` to the options.
 
@@ -188,4 +191,3 @@ ipp.request(opts, data, function(err, res) {
 ## License
 
 MIT
-
