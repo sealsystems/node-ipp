@@ -69,10 +69,10 @@ jobs:
       - name: Check for modifications other than package-lock.json
         run: |
           git add .
-          echo "NOTE: TEMPORARILY INCLUDE package-lock.json TO TAKE VERSION CHANGE INTO ACCOUNT"
-          echo "NOTE: PLEASE DISABLE AFTER ALL REPOSITORIES ARE UPDATED!"
+          #echo "NOTE: TEMPORARILY INCLUDE package-lock.json TO TAKE VERSION CHANGE INTO ACCOUNT"
+          #echo "NOTE: PLEASE DISABLE AFTER ALL REPOSITORIES ARE UPDATED!"
           # echo Remove package-lock.json from index
-          # git reset -- package-lock.json
+          git reset -- package-lock.json
           if git diff --cached --exit-code; then
             echo "No relevant changes made. Skip creating pull request."
           else
