@@ -1,3 +1,10 @@
+## 2.8.1 (2024-04-08)
+
+### Bug Fixes
+
+
+Propagate error from input to output stream ([5887148](https://github.com/sealsystems/node-ipp/commit/5887148))
+
 ## 2.8.0 (2023-03-31)
 
 ### Features
