@@ -44,7 +44,7 @@ function PatchImages($Product, $Version, $ProductName) {
   #   $branch = "--branch $Version"
   #   Write-Host "Using branch info: Version = $Version"
   # }
-  
+
   # Clone images from github
   git clone $branch https://${env:GITHUB_TOKEN}@github.com/sealsystems/$Repo
   $Dir = "seal-icons/$name"
@@ -62,7 +62,7 @@ function PatchImages($Product, $Version, $ProductName) {
   # always copy Icon
   $File = (Get-ChildItem -Path "$Dir" *.ico).Name
   if ($File) {
-    CopyFile "$Dir/$File" "$TargetResourceDir/logo.ico" 
+    CopyFile "$Dir/$File" "$TargetResourceDir/logo.ico"
   }
   # copy logo for bundle banner
   if ("$ProductName" -ne "") {
@@ -72,18 +72,18 @@ function PatchImages($Product, $Version, $ProductName) {
       $File = (Get-ChildItem -Path "$Dir" *.ico).Name
     }
     if ($File) {
-      CopyFile "$Dir/$File" "$TargetResourceDir/logo.png" 
+      CopyFile "$Dir/$File" "$TargetResourceDir/logo.png"
     }
   } else {
     # copy banner
     $File = Get-ChildItem -Path "$Path" | Where-Object {$_.Name -match '.*Banner.*\.bmp'}
     if ($File) {
-      CopyFile "$Dir/$File" "$TargetResourceDir/msi_banner.bmp" 
+      CopyFile "$Dir/$File" "$TargetResourceDir/msi-banner.bmp"
     }
     # copy dialog
-    $File = Get-ChildItem -Path "$Path" | Where-Object {$_.Name -match '.*Dialog.*\.bmp'}
+    $File = Get-ChildItem -Path "$Path" | Where-Object {$_.Name -match '.*Welcome.*\.bmp'}
     if ($File) {
-      CopyFile "$Dir/$File" "$TargetResourceDir/msi_dialog.bmp" 
+      CopyFile "$Dir/$File" "$TargetResourceDir/msi-welcome.bmp"
     }
   }
   Remove-Item -Recurse -Force seal-icons
@@ -92,4 +92,4 @@ function PatchImages($Product, $Version, $ProductName) {
 }
 
 # Patch images
-PatchImages "$env:PACKAGE_NAME" "$env:PACKAGE_VERSION" "$env:PRODUCT_NAME" 
+PatchImages "$env:PACKAGE_NAME" "$env:PACKAGE_VERSION" "$env:PRODUCT_NAME"
