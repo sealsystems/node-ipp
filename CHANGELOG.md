@@ -1,3 +1,10 @@
+## 2.8.2 (2024-04-16)
+
+### Bug Fixes
+
+
+Fix missing response in execute ([5d1778b](https://github.com/sealsystems/node-ipp/commit/5d1778b))
+
 ## 2.8.1 (2024-04-08)
 
 ### Bug Fixes
