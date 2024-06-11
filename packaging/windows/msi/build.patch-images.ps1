@@ -76,12 +76,12 @@ function PatchImages($Product, $Version, $ProductName) {
     }
   } else {
     # copy banner
-    $File = Get-ChildItem -Path "$Path" | Where-Object {$_.Name -match '.*Banner.*\.bmp'}
+    $File = (Get-ChildItem -Path "$Dir" '*Banner*.bmp').Name
     if ($File) {
       CopyFile "$Dir/$File" "$TargetResourceDir/msi-banner.bmp"
     }
     # copy dialog
-    $File = Get-ChildItem -Path "$Path" | Where-Object {$_.Name -match '.*Welcome.*\.bmp'}
+    $File = (Get-ChildItem -Path "$Dir" '*Welcome*.bmp').Name
     if ($File) {
       CopyFile "$Dir/$File" "$TargetResourceDir/msi-welcome.bmp"
     }
