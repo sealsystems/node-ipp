@@ -48,6 +48,12 @@ jobs:
           # Use personal access token, must be set for *each step*
           NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
 
+      - name: Run seal preinstall
+        run: npm run sealpreinstall || true
+        env:
+          DELIVERY_CREDENTIALS: ${{ secrets.DELIVERY_CREDENTIALS2 }}
+          NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
+
       - name: Install dev dependencies
         run: npm install --only=dev
         env:
