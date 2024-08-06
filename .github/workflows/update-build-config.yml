@@ -25,10 +25,10 @@ jobs:
           git checkout -B nightly/update-build-configuration
           git reset --hard ${GITHUB_REF#refs/heads/}
 
-      - name: Use Node.js 20.12.2
+      - name: Use Node.js 20.16.0
         uses: actions/setup-node@v4
         with:
-          node-version: 20.12.2
+          node-version: 20.16.0
           registry-url: https://npm.pkg.github.com/
           scope: "@sealsystems"
 
@@ -39,7 +39,7 @@ jobs:
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
-          key: ${{ runner.os }}-${{ env.cache-name }}-20.12.2-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-20.16.0-${{ hashFiles('**/package-lock.json') }}
 
       - name: Set legacy-peer-deps
         run: |
@@ -78,7 +78,7 @@ jobs:
           #echo "NOTE: TEMPORARILY INCLUDE package-lock.json TO TAKE VERSION CHANGE INTO ACCOUNT"
           #echo "NOTE: PLEASE DISABLE AFTER ALL REPOSITORIES ARE UPDATED!"
           # echo Remove package-lock.json from index
-          git reset -- package-lock.json
+          # git reset -- package-lock.json
           if git diff --cached --exit-code; then
             echo "No relevant changes made. Skip creating pull request."
           else
