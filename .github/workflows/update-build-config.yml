@@ -118,6 +118,7 @@ jobs:
           --title "Update build configuration" \
           --body "The build configuration of this project is outdated and may no longer work.
           This pull request will be merged automatically if there are no conflicts." \
+          --head nightly/update-build-configuration \
           ${reviewerOption}
         env:
           GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
