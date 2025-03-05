@@ -14,20 +14,6 @@ env:
 jobs:
   Test-Linux:
     runs-on: ubuntu-22.04
-
-    services:
-      mongo:
-        image: ghcr.io/sealsystems/mongodb-rs:4.4.4
-        credentials:
-          username: ${{ github.actor }}
-          password: ${{ secrets.CI_TOKEN }}
-        ports:
-        - 27017:27017
-      consul:
-        image: consul:1.15.0
-        ports:
-        - 8500:8500
-
     steps:
     - uses: actions/checkout@v4
 
