@@ -189,4 +189,28 @@ suite('request', () => {
       });
     });
   });
+
+  test('returns timeout error', (done) => {
+    const reqBuf = serializer(requestMsg);
+    const app = express();
+
+    app.post('/jobs/:job', (req) => {
+      rawBody(req, {}, (errBody) => {
+        assert.that(errBody).is.null();
+        // do not send a response!
+      });
+    });
+
+    app.listen(port, (errListen) => {
+      assert.that(errListen).is.undefined();
+      const start = Date.now();
+      const opts = url.parse(requestMsg['operation-attributes-tag']['job-uri']);
+      opts.timeout = 200;
+      request(opts, reqBuf, (errRequest) => {
+        assert.that(errRequest.code).is.equalTo('ETIMEDOUT');
+        assert.that(Date.now() - start).is.atLeast(opts.timeout);
+        done();
+      });
+    });
+  });
 });
