@@ -54,7 +54,6 @@ doc.output(function(pdf) {
 });
 ```
 
-
 To interact with a printer, create a `Printer` object.
 
 > Technically speaking: a `Printer` object does not need to be an actual printer. According to the IPP spec, it
