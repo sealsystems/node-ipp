@@ -21,7 +21,7 @@
   "homepage": "http://github.com/sealsystems/node-ipp",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sealsystems/node-ipp"
+    "url": "git+https://github.com/sealsystems/node-ipp.git"
   },
   "contributors": [
     {
