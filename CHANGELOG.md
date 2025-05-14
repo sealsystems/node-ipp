@@ -1,3 +1,36 @@
+## 2.9.0 (2025-05-14)
+
+### Bug Fixes
+
+
+Fix package.json ([ec46a48](https://github.com/sealsystems/node-ipp/commit/ec46a48))
+
+next try fixing build ([d823e67](https://github.com/sealsystems/node-ipp/commit/d823e67))
+
+Replaced CI_TOKEN by GITHUB token in all workflows ([ef053ea](https://github.com/sealsystems/node-ipp/commit/ef053ea))
+
+trigger build ([84f51cb](https://github.com/sealsystems/node-ipp/commit/84f51cb))
+
+trigger release ([347778e](https://github.com/sealsystems/node-ipp/commit/347778e))
+
+Update release.yml ([b604a00](https://github.com/sealsystems/node-ipp/commit/b604a00))
+
+Use different token for releasing ([375a551](https://github.com/sealsystems/node-ipp/commit/375a551))
+
+### Chores
+
+
+Trigger release ([a9de0d9](https://github.com/sealsystems/node-ipp/commit/a9de0d9))
+
+Trigger release ([2236de7](https://github.com/sealsystems/node-ipp/commit/2236de7))
+
+Trigger release ([40d688f](https://github.com/sealsystems/node-ipp/commit/40d688f))
+
+### Features
+
+
+timeout starts now  after finished sending data ([83c3c74](https://github.com/sealsystems/node-ipp/commit/83c3c74))
+
 ## 2.8.2 (2024-04-16)
 
 ### Bug Fixes
