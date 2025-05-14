@@ -15,6 +15,12 @@ jobs:
   Test-Linux:
     runs-on: ubuntu-22.04
 
+    services:
+      consul:
+        image: consul:1.15.0
+        ports:
+        - 8500:8500
+
     steps:
     - uses: actions/checkout@v4
 

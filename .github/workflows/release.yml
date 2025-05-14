@@ -20,13 +20,6 @@ jobs:
     runs-on: ubuntu-22.04
 
     services:
-      mongo:
-        image: ghcr.io/sealsystems/mongodb-rs:4.4.4
-        credentials:
-          username: ${{ github.actor }}
-          password: ${{ secrets.CI_TOKEN }}
-        ports:
-          - 27017:27017
       consul:
         image: consul:1.15.0
         ports:
@@ -55,13 +48,13 @@ jobs:
         run: npm ci
         env:
           # Use personal access token, must be set for *each step*
-          NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run tests
         run: npm run bot
         env:
           # Use personal access token, must be set for *each step*
-          NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   Test-Windows:
     # Ignore release commits and automatic updates of build config
@@ -85,44 +78,6 @@ jobs:
           node-version: 22.14.0
           registry-url: https://npm.pkg.github.com/
           scope: "@sealsystems"
-
-      - name: Install MongoDB 4.4.4
-        run: |
-          Write-Host "Stopping existing MongoDB service..."
-          Stop-Service mongodb -force
-
-          Write-Host "Downloading https://fastdl.mongodb.org/windows/mongodb-windows-x86_64-4.4.4.zip ..."
-          (New-Object Net.WebClient).DownloadFile(
-            "https://fastdl.mongodb.org/windows/mongodb-windows-x86_64-4.4.4.zip",
-            "C:\mongodb-windows-x86_64-4.4.4.zip"
-          )
-
-          Write-Host "Extracting zip archive to C:\mongodb ..."
-          Expand-Archive "C:\mongodb-windows-x86_64-4.4.4.zip" -DestinationPath "C:\"
-          Rename-Item "C:\mongodb-win32-x86_64-windows-4.4.4" "C:\mongodb"
-
-          Write-Host "Creating necessary folders in C:\mongodb ..."
-          mkdir c:\mongodb\data\db | Out-Null
-          mkdir c:\mongodb\log | Out-Null
-
-          Write-Host "Writing MongoDB configuration..."
-          "systemLog:
-            destination: file
-            path: c:\mongodb\log\mongod.log
-          storage:
-            dbPath: c:\mongodb\data\db
-          replication:
-            replSetName: rs0
-          " | Out-File C:\mongodb\mongod.cfg -Encoding utf8
-
-          Write-Host "Creating seal-mongodb service..."
-          cmd /c start /wait sc create seal-mongodb binPath= "C:\mongodb\bin\mongod.exe --service --config=C:\mongodb\mongod.cfg" DisplayName= "seal-mongodb" start= "demand"
-
-          Write-Host "Starting seal-mongodb service..."
-          Start-Service seal-mongodb
-
-          Write-Host "Initiate MonogDB replicaSet..."
-          C:\mongodb\bin\mongo.exe --eval 'rs.initiate()'
 
       - name: Install Consul 1.15.0
         run: |
@@ -158,13 +113,13 @@ jobs:
         run: npm ci
         env:
           # Use personal access token, must be set for *each step*
-          NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run tests
         run: npm run bot
         env:
           # Use personal access token, must be set for *each step*
-          NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   Release:
     # Ignore release commits and automatic updates of build config
@@ -184,15 +139,15 @@ jobs:
       GIT_COMMITTER_EMAIL: com.git@sealsystems.de
       GIT_COMMITTER_NAME: CI Build
       # Use personal access token for creating releases on GitHub
-      GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # Use personal access token for publishing on GitHub Packages
-      NPM_TOKEN: ${{ secrets.CI_TOKEN }}
+      NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - uses: actions/checkout@v4
         with:
           # Use personal access token for cloning (and later pushing) code
-          token: ${{ secrets.CI_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Use Node.js 22.14.0
         uses: actions/setup-node@v4
@@ -214,7 +169,7 @@ jobs:
         run: npm ci
         env:
           # Use personal access token, must be set for *each step*
-          NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Bugfix release: Set distribution tag accordingly to not remove 'latest' tag from the current version"
         # Only on bugfix branches
@@ -230,7 +185,7 @@ jobs:
           npm run release
         env:
           # Use personal access token, must be set for *each step*
-          NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # # Debug with RDP
       # - name: Install Ngrok
