@@ -185,7 +185,7 @@ jobs:
           npm run release
         env:
           # Use personal access token, must be set for *each step*
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GH_ACTION_SEMVER_TOKEN }}
 
       # # Debug with RDP
       # - name: Install Ngrok
