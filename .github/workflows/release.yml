@@ -181,9 +181,8 @@ jobs:
 
       - name: Trigger release
         run: |
-          # npm install --no-save @sealsystems/semantic-release@latest
-          npm install --no-save semantic-release/semantic-release
-          npx semantic-release --color
+          npm install --no-save @sealsystems/semantic-release@latest
+          npm run release
         env:
           # Use personal access token, must be set for *each step*
           NODE_AUTH_TOKEN: ${{ secrets.GH_ACTION_SEMVER_TOKEN }}
