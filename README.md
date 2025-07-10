@@ -67,6 +67,9 @@ To interact with a printer, create a `Printer` object.
 * `uri` - Specifies the value for the 'printer-uri' attribute of requests. Defaults to `ipp://+url.host+url.path`.
 * `version` - Specifies the value for the 'version' attribute of requests. Defaults to `2.0`.
 * `agent` - Specifies the value for the 'http(s)' agent. Defaults to `undefined`.
+* `closeTimeout` - Optional object containing options about socket timeout
+  - `socketCloseTimeout` - Mandatory timeout in milliseconds for the socket to close after the request has been sent.
+  - `socketCloseTimeoutIsError` - If set to `true`, an error will be thrown if the socket does not close within the timeout. Defaults to `false`.
 
 ### printer.execute(operation, message, callback)
 
