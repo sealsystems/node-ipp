@@ -82,8 +82,33 @@ suite('request', () => {
     app.listen(port, (errListen) => {
       assert.that(errListen).is.undefined();
 
-      request(url.parse(requestMsg['operation-attributes-tag']['job-uri']), reqBuf, (errRequest, res) => {
+      const opts = url.parse(requestMsg['operation-attributes-tag']['job-uri']);
+      request(opts, reqBuf, (errRequest, res) => {
         assert.that(res).is.equalTo(responseMsg);
+        done();
+      });
+    });
+  });
+
+  test('return error on socket close timeout', (done) => {
+    const reqBuf = serializer(requestMsg);
+    const app = express();
+
+    app.post('/jobs/:job', () => {
+      // do NOT send a response
+    });
+
+    app.listen(port, (errListen) => {
+      assert.that(errListen).is.undefined();
+
+      const opts = url.parse(requestMsg['operation-attributes-tag']['job-uri']);
+      opts.closeTimeout = {
+        socketCloseTimeout: 100,
+        socketCloseTimeoutIsError: true
+      };
+      request(opts, reqBuf, (errRequest) => {
+        assert.that(errRequest).is.instanceOf(Error);
+        assert.that(errRequest.message).is.equalTo('Timeout occurred when closing socket.');
         done();
       });
     });
