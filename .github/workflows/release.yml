@@ -24,14 +24,13 @@ jobs:
         image: consul:1.15.0
         ports:
           - 8500:8500
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js 22.14.0
+      - name: Use Node.js 22.16.0
         uses: actions/setup-node@v4
         with:
-          node-version: 22.14.0
+          node-version: 22.16.0
           registry-url: https://npm.pkg.github.com/
           scope: "@sealsystems"
 
@@ -42,7 +41,7 @@ jobs:
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
-          key: ${{ runner.os }}-${{ env.cache-name }}-22.14.0-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-22.16.0-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
         run: npm ci
@@ -62,7 +61,7 @@ jobs:
       !startsWith(github.event.head_commit.message, 'Release') &&
       github.event.head_commit.message != 'Update build configuration'
 
-    runs-on: windows-2019
+    runs-on: windows-2022
 
     steps:
       - name: Set git to use LF
@@ -72,10 +71,10 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - name: Use Node.js 22.14.0
+      - name: Use Node.js 22.16.0
         uses: actions/setup-node@v4
         with:
-          node-version: 22.14.0
+          node-version: 22.16.0
           registry-url: https://npm.pkg.github.com/
           scope: "@sealsystems"
 
@@ -149,10 +148,10 @@ jobs:
           # Use personal access token for cloning (and later pushing) code
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Use Node.js 22.14.0
+      - name: Use Node.js 22.16.0
         uses: actions/setup-node@v4
         with:
-          node-version: 22.14.0
+          node-version: 22.16.0
           registry-url: https://npm.pkg.github.com/
           scope: "@sealsystems"
 
@@ -163,7 +162,7 @@ jobs:
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
-          key: ${{ runner.os }}-${{ env.cache-name }}-22.14.0-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-22.16.0-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
         run: npm ci
