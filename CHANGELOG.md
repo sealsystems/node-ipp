@@ -1,3 +1,15 @@
+## 2.10.0 (2025-07-10)
+
+### Bug Fixes
+
+
+updated build config ([e1cf8a0](https://github.com/sealsystems/node-ipp/commit/e1cf8a0))
+
+### Features
+
+
+Added options for socket timeout ([acc1230](https://github.com/sealsystems/node-ipp/commit/acc1230))
+
 ## 2.9.0 (2025-05-14)
 
 ### Bug Fixes
