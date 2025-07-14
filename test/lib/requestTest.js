@@ -114,6 +114,31 @@ suite('request', () => {
     });
   });
 
+  test('do not return error on socket close timeout if disabled', (done) => {
+    const reqBuf = serializer(requestMsg);
+    const app = express();
+
+    app.post('/jobs/:job', () => {
+      // do NOT send a response
+    });
+
+    app.listen(port, (errListen) => {
+      assert.that(errListen).is.undefined();
+
+      const opts = url.parse(requestMsg['operation-attributes-tag']['job-uri']);
+      opts.closeTimeout = {
+        socketCloseTimeout: 100,
+        socketCloseTimeoutIsError: false
+      };
+      request(opts, reqBuf, (errRequest, response) => {
+        assert.that(errRequest).is.null();
+        assert.that(response).is.ofType('object');
+        assert.that(response.statusCode).is.equalTo('successful-ok');
+        done();
+      });
+    });
+  });
+
   test('POST stream data', (done) => {
     const myStream = new PassThrough();
     const reqBuf = serializer(requestMsg);
