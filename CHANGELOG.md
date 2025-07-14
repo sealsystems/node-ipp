@@ -1,3 +1,15 @@
+## 2.10.1 (2025-07-14)
+
+### Bug Fixes
+
+
+Fixed bug at socket close timeout ([e4461c3](https://github.com/sealsystems/node-ipp/commit/e4461c3))
+
+### Chores
+
+
+Trigger release ([7ef10bf](https://github.com/sealsystems/node-ipp/commit/7ef10bf))
+
 ## 2.10.0 (2025-07-10)
 
 ### Bug Fixes
